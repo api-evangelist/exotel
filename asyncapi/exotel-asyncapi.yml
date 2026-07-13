@@ -1,0 +1,262 @@
+asyncapi: 2.6.0
+info:
+  title: Exotel AgentStream Voice Streaming API
+  version: '1.0'
+  description: >-
+    Exotel AgentStream (also surfaced through the Voicebot and Stream
+    applets) is a documented public WebSocket API for real-time voice media
+    streaming during a call. When a call hits a Voicebot/Stream applet in an
+    Exotel call flow, Exotel opens a secure WebSocket (`wss://`) connection
+    to the endpoint you configure and streams the caller's audio as
+    base64-encoded linear PCM in ~100 ms frames. With the Voicebot applet the
+    stream is BIDIRECTIONAL: your server can send audio (and `mark`/`clear`
+    control events) back over the same socket to speak to the caller and to
+    barge in. The Stream applet is unidirectional (caller audio to your
+    server only).
+
+
+    CONNECTION MODEL: Exotel is the WebSocket CLIENT; your bot/server hosts
+    the `wss://` endpoint. This document therefore models YOUR server as the
+    AsyncAPI "server" that Exotel connects to. Replace the host below with
+    your own endpoint.
+
+
+    GROUNDING: Event names and JSON message shapes (connected, start, media,
+    dtmf, mark, stop inbound; media, mark, clear outbound) and the audio
+    format are taken from Exotel's AgentStream developer guide. Field-level
+    schemas are modeled from the documented example messages.
+  contact:
+    name: Exotel Developer Support
+    url: https://developer.exotel.com/docs/agentstream/developer-guide
+  x-transport-notes: >-
+    Real bidirectional WebSocket (wss://) with a documented message protocol.
+    This is NOT HTTP SSE. Exotel initiates the connection to your endpoint;
+    the URL, path, and query string (which carry custom_parameters) are
+    defined by you when you configure the Voicebot/Stream applet.
+servers:
+  yourEndpoint:
+    url: your-bot-host.example.com
+    protocol: wss
+    description: >-
+      Your WebSocket endpoint that Exotel connects to. You supply a wss://
+      (or https:// upgraded) URL in the Voicebot/Stream applet configuration;
+      any path and query parameters you set are echoed back as
+      custom_parameters in the start event.
+defaultContentType: application/json
+channels:
+  /:
+    description: >-
+      The single bidirectional media stream socket for one call. Exotel sends
+      connected/start/media/dtmf/mark/stop; your server (Voicebot applet only)
+      may send media/mark/clear.
+    subscribe:
+      operationId: receiveFromExotel
+      summary: Messages Exotel sends to your server.
+      message:
+        oneOf:
+          - $ref: '#/components/messages/Connected'
+          - $ref: '#/components/messages/Start'
+          - $ref: '#/components/messages/MediaIn'
+          - $ref: '#/components/messages/Dtmf'
+          - $ref: '#/components/messages/MarkIn'
+          - $ref: '#/components/messages/Stop'
+    publish:
+      operationId: sendToExotel
+      summary: Messages your server sends back to Exotel (Voicebot applet only).
+      message:
+        oneOf:
+          - $ref: '#/components/messages/MediaOut'
+          - $ref: '#/components/messages/MarkOut'
+          - $ref: '#/components/messages/Clear'
+components:
+  messages:
+    Connected:
+      name: connected
+      title: Connected
+      summary: First frame after the socket opens.
+      payload:
+        type: object
+        properties:
+          event:
+            type: string
+            const: connected
+    Start:
+      name: start
+      title: Start
+      summary: Sent once at stream start with call and media metadata.
+      payload:
+        type: object
+        properties:
+          event:
+            type: string
+            const: start
+          sequence_number:
+            type: string
+          stream_sid:
+            type: string
+          start:
+            type: object
+            properties:
+              stream_sid:
+                type: string
+              call_sid:
+                type: string
+              account_sid:
+                type: string
+              from:
+                type: string
+              to:
+                type: string
+              custom_parameters:
+                type: object
+                additionalProperties: true
+                description: Query parameters you set on your applet URL.
+              media_format:
+                type: object
+                properties:
+                  encoding:
+                    type: string
+                    example: audio/x-raw
+                  sample_rate:
+                    type: string
+                    enum: ['8000', '16000', '24000']
+                  bit_rate:
+                    type: string
+                    example: '16'
+    MediaIn:
+      name: media
+      title: Media (inbound)
+      summary: A frame of caller audio (base64 linear PCM).
+      payload:
+        type: object
+        properties:
+          event:
+            type: string
+            const: media
+          sequence_number:
+            type: string
+          stream_sid:
+            type: string
+          media:
+            type: object
+            properties:
+              chunk:
+                type: string
+              timestamp:
+                type: string
+              payload:
+                type: string
+                description: Base64-encoded 16-bit mono linear PCM.
+    Dtmf:
+      name: dtmf
+      title: DTMF (Voicebot only)
+      summary: A DTMF keypress detected during the call.
+      payload:
+        type: object
+        properties:
+          event:
+            type: string
+            const: dtmf
+          sequence_number:
+            type: string
+          stream_sid:
+            type: string
+          dtmf:
+            type: object
+            properties:
+              digit:
+                type: string
+              duration:
+                type: string
+    MarkIn:
+      name: mark
+      title: Mark (inbound, Voicebot only)
+      summary: Confirms previously sent audio has finished playing.
+      payload:
+        type: object
+        properties:
+          event:
+            type: string
+            const: mark
+          sequence_number:
+            type: string
+          stream_sid:
+            type: string
+          mark:
+            type: object
+            properties:
+              name:
+                type: string
+    Stop:
+      name: stop
+      title: Stop
+      summary: Sent when the stream ends.
+      payload:
+        type: object
+        properties:
+          event:
+            type: string
+            const: stop
+          sequence_number:
+            type: string
+          stream_sid:
+            type: string
+          stop:
+            type: object
+            properties:
+              call_sid:
+                type: string
+              account_sid:
+                type: string
+              reason:
+                type: string
+                enum: [stopped, callended]
+    MediaOut:
+      name: media
+      title: Media (outbound, Voicebot only)
+      summary: A frame of audio to play to the caller (base64 PCM).
+      payload:
+        type: object
+        properties:
+          event:
+            type: string
+            const: media
+          stream_sid:
+            type: string
+          media:
+            type: object
+            properties:
+              payload:
+                type: string
+                description: >-
+                  Base64 PCM/PCMU in ~100 ms frames; multiples of 320 bytes,
+                  up to ~100 KB per frame.
+    MarkOut:
+      name: mark
+      title: Mark (outbound, Voicebot only)
+      summary: Label a point in your outbound audio stream.
+      payload:
+        type: object
+        properties:
+          event:
+            type: string
+            const: mark
+          stream_sid:
+            type: string
+          mark:
+            type: object
+            properties:
+              name:
+                type: string
+    Clear:
+      name: clear
+      title: Clear (outbound, Voicebot only)
+      summary: Barge-in - discard queued outbound audio.
+      payload:
+        type: object
+        properties:
+          event:
+            type: string
+            const: clear
+          stream_sid:
+            type: string

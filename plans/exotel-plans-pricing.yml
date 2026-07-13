@@ -1,0 +1,157 @@
+specification: API Commons Plans
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/Plans
+provider: Exotel
+providerId: exotel
+created: '2026-07-12'
+modified: '2026-07-12'
+reconciled: false
+tags:
+- Cloud Telephony
+- Voice
+- SMS
+- CPaaS
+- India
+- Plans
+description: >-
+  Exotel sells its cloud communication suite as prepaid bundles plus
+  usage-based consumption. Purchases are held as credits (1 credit = 1 INR)
+  that are drawn down across voice minutes, SMS, and WhatsApp, on top of
+  monthly virtual-number rentals and per-seat agent fees. Business Phone
+  System is offered as tiered prepaid bundles (commonly named Dabbler,
+  Believer, Influencer) plus a custom Enterprise tier. Indian invoices add
+  18% GST. Exact figures below are indicative from public pricing summaries
+  and are NOT reconciled - verify on exotel.com/pricing.
+notes: >-
+  Pricing varies by region, number type, volume tier, and negotiated
+  contract. The credit model means voice, SMS, and WhatsApp draw from a
+  shared balance. Number rentals and activation fees are separate from usage.
+  Reconcile all figures against the live pricing page before relying on them.
+sources:
+- https://exotel.com/pricing/
+- https://exotel.com/pricing/business-phone-system/
+- https://developer.exotel.com/docs/faqs/pricing-plans
+plans:
+- id: exotel-free-trial
+  name: Free Trial
+  type: trial
+  description: >-
+    7-day trial commonly bundled with ~500 credits (approx INR 500) to test
+    voice, SMS, and number provisioning.
+  entries:
+  - label: Trial Credits
+    name: trial_credits
+    type: flat
+    metric: credits
+    limit: -1
+    timeFrame: day
+    geo: india
+    unit: 1
+    price: included (approx INR 500 in credits, 7 days)
+    userMultiplied: false
+  elements:
+  - name: Voice Calls
+  - name: SMS
+  - name: Test Virtual Number
+- id: exotel-prepaid-bundle
+  name: Prepaid Bundle (Business Phone System)
+  type: paid
+  description: >-
+    Tiered prepaid bundles (e.g. Dabbler / Believer / Influencer) that load a
+    credit balance drawn down by usage, with entry pricing reported around
+    INR 9,999. Includes core voice, IVR/call-flow, SMS, and number features.
+  entries:
+  - label: Prepaid Credits
+    name: prepaid_credits
+    type: prepaid
+    metric: credits
+    limit: -1
+    timeFrame: month
+    geo: india
+    unit: 1
+    price: from ~INR 9,999 (indicative; 1 credit = INR 1)
+    userMultiplied: false
+  - label: Additional Agent Seat
+    name: agent_seat
+    type: flat
+    metric: seat
+    limit: -1
+    timeFrame: month
+    geo: india
+    unit: 1
+    price: ~INR 199/seat/month (or ~INR 1,200/month flat for unlimited agents)
+    userMultiplied: true
+  elements:
+  - name: Programmable Voice
+  - name: IVR / Call Flows
+  - name: SMS
+  - name: Call Recording
+  - name: Number Rental (separate)
+- id: exotel-usage
+  name: Usage (Pay per Use)
+  type: usage
+  description: >-
+    Consumption charges drawn from the credit balance - per-minute voice and
+    per-SMS - plus recurring virtual-number rentals and one-time activation
+    fees. Toll-free numbers carry higher activation and per-minute inbound
+    charges.
+  entries:
+  - label: SMS
+    name: sms_usage
+    type: usage
+    metric: messages
+    limit: -1
+    timeFrame: month
+    geo: india
+    unit: 1
+    price: from ~INR 0.18/SMS at volume (indicative)
+    userMultiplied: false
+  - label: Voice Minutes
+    name: voice_usage
+    type: usage
+    metric: minutes
+    limit: -1
+    timeFrame: month
+    geo: india
+    unit: 1
+    price: per-minute, rate by number type and destination (see pricing page)
+    userMultiplied: false
+  - label: Virtual Number Rental
+    name: number_rental
+    type: flat
+    metric: number
+    limit: -1
+    timeFrame: month
+    geo: india
+    unit: 1
+    price: one-time activation + monthly rental (varies by number type)
+    userMultiplied: false
+  elements:
+  - name: Per-Minute Voice
+  - name: Per-SMS Messaging
+  - name: WhatsApp (conversation-based + platform fee)
+  - name: Number Rental
+- id: exotel-enterprise
+  name: Enterprise / Custom
+  type: enterprise
+  description: >-
+    Custom contract for high-volume contact centers with negotiated rates,
+    dedicated numbers/channels, SLAs, and support.
+  entries:
+  - label: Enterprise Agreement
+    name: enterprise
+    type: flat
+    metric: contract
+    limit: -1
+    timeFrame: year
+    geo: global
+    unit: 1
+    price: contact sales
+    userMultiplied: false
+  elements:
+  - name: Custom Volume Pricing
+  - name: Dedicated Numbers and Channels
+  - name: SLAs and Support
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

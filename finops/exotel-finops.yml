@@ -1,0 +1,110 @@
+specification: FinOps Framework
+specificationVersion: '1.0'
+schema: https://www.finops.org/framework/
+provider: Exotel
+providerId: exotel
+created: '2026-07-12'
+modified: '2026-07-12'
+reconciled: false
+tags:
+- Cloud Telephony
+- Voice
+- SMS
+- CPaaS
+- India
+- FinOps
+- Cost Management
+- FOCUS
+description: >-
+  FinOps view of Exotel spend. Exotel bills through a prepaid credit balance
+  (1 credit = 1 INR) drawn down by per-minute voice, per-SMS, and
+  conversation-based WhatsApp usage, layered on top of recurring
+  virtual-number rentals, one-time number activation fees, and per-seat agent
+  charges. Indian invoices add 18% GST. Cost is therefore a blend of
+  subscription-style commitments (bundles, seats, number rentals) and pure
+  usage (minutes and messages), which makes per-workload allocation the main
+  FinOps lever.
+notes: >-
+  Per-unit rates are not reconciled here; verify on exotel.com/pricing. The
+  shared credit balance means voice, SMS, and WhatsApp all deplete the same
+  pool, so allocation requires tagging traffic (via CallerId/ExoPhone, Sender
+  ID, CustomField, or campaign) back to cost centers.
+sources:
+- https://exotel.com/pricing/
+- https://exotel.com/pricing/business-phone-system/
+- https://developer.exotel.com/docs/faqs/pricing-plans
+- https://focus.finops.org/focus-specification/v1-3/
+alignedWith:
+  framework: FinOps Foundation Framework
+  frameworkUrl: https://www.finops.org/framework/
+  dataSpec: FOCUS
+  dataSpecVersion: '1.3'
+  dataSpecUrl: https://focus.finops.org/focus-specification/v1-3/
+publisherName: Exotel
+serviceCategory: Communications and Telephony
+billingModel:
+  pricingCategory: Usage-Based
+  billingFrequency: Prepaid
+  billingCurrency: INR
+  chargeCategories:
+  - Usage
+  - Purchase
+  - Tax
+  - Adjustment
+focusColumns:
+  ServiceName: Exotel Cloud Telephony
+  ServiceCategory: Communications and Telephony
+  ProviderName: Exotel
+  PublisherName: Exotel
+  InvoiceIssuerName: Exotel
+  BillingCurrency: INR
+  ChargeCategory: Usage
+  PricingCategory: Usage-Based
+meters:
+- name: voice_minutes
+  description: Per-minute voice usage (outbound/inbound), rate varies by number type and destination; drawn from the credit balance.
+  unit: minutes
+  aggregation: sum
+  dimensions:
+  - account
+  - caller_id
+  - number_type
+- name: sms_messages
+  description: Per-SMS usage, rate tiered by volume; India traffic requires DLT approval.
+  unit: messages
+  aggregation: sum
+  dimensions:
+  - account
+  - sender_id
+  - sms_type
+- name: whatsapp_conversations
+  description: Conversation-based WhatsApp usage plus a per-message platform fee.
+  unit: conversations
+  aggregation: sum
+  dimensions:
+  - account
+- name: number_rental
+  description: Recurring monthly rental (and one-time activation) for virtual numbers / ExoPhones and toll-free numbers.
+  unit: numbers
+  aggregation: sum
+  dimensions:
+  - account
+  - number_type
+- name: agent_seats
+  description: Per-seat monthly agent charge for call-center users.
+  unit: seats
+  aggregation: sum
+  dimensions:
+  - account
+principles:
+- name: Visibility
+  description: Track credit-balance burn split by voice minutes, SMS, and WhatsApp; monitor number rentals and seat counts separately from usage.
+- name: Allocation
+  description: Tag traffic by CallerId/ExoPhone, Sender ID, CustomField, or campaign so shared-credit usage maps to teams/workloads.
+- name: Optimization
+  description: Right-size the number of rented virtual numbers and agent seats; use call flows to shorten billable minutes; batch and template SMS to reduce failures/retries under DLT.
+- name: Accountability
+  description: Set owners per ExoPhone/campaign; review prepaid burn rate against bundle refills, factoring 18% GST on Indian invoices.
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

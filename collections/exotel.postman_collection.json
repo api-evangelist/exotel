@@ -1,0 +1,239 @@
+{
+  "info": {
+    "name": "Exotel API",
+    "description": "Representative subset of Exotel's Twilio-style cloud telephony REST API: connect calls, send SMS, retrieve call details, look up number metadata, and manage call campaigns. Base URL is region-specific: https://api.exotel.com (Singapore) or https://api.in.exotel.com (Mumbai/India). Auth is HTTP Basic with API Key (username) and API Token (password); Account SID appears in every path. Exotel returns XML by default - append .json for JSON. Endpoint paths/methods are confirmed from Exotel docs; body/response field schemas are modeled.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "auth": {
+    "type": "basic",
+    "basic": [
+      { "key": "username", "value": "{{apiKey}}", "type": "string" },
+      { "key": "password", "value": "{{apiToken}}", "type": "string" }
+    ]
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "https://api.exotel.com", "type": "string" },
+    { "key": "accountSid", "value": "", "type": "string" },
+    { "key": "apiKey", "value": "", "type": "string" },
+    { "key": "apiToken", "value": "", "type": "string" }
+  ],
+  "item": [
+    {
+      "name": "Voice",
+      "item": [
+        {
+          "name": "Connect two numbers / connect to a call flow",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/x-www-form-urlencoded" }],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                { "key": "From", "value": "", "description": "Number Exotel calls first (E.164)." },
+                { "key": "To", "value": "", "description": "Number to connect to. Use this OR Url." },
+                { "key": "CallerId", "value": "", "description": "Your ExoPhone / virtual number." },
+                { "key": "Url", "value": "", "description": "Call-flow URL to connect to instead of To.", "disabled": true },
+                { "key": "Record", "value": "true", "disabled": true },
+                { "key": "TimeLimit", "value": "3600", "disabled": true },
+                { "key": "StatusCallback", "value": "", "disabled": true }
+              ]
+            },
+            "url": {
+              "raw": "{{baseUrl}}/v1/Accounts/{{accountSid}}/Calls/connect.json",
+              "host": ["{{baseUrl}}"],
+              "path": ["v1", "Accounts", "{{accountSid}}", "Calls", "connect.json"]
+            },
+            "description": "POST /v1/Accounts/{sid}/Calls/connect - connect two numbers, or connect a number to an Exotel call flow via the Url parameter. Confirmed endpoint; parameters from documented form fields."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Call Details",
+      "item": [
+        {
+          "name": "Get call details",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/v1/Accounts/{{accountSid}}/Calls/:CallSid.json",
+              "host": ["{{baseUrl}}"],
+              "path": ["v1", "Accounts", "{{accountSid}}", "Calls", ":CallSid.json"],
+              "variable": [{ "key": "CallSid", "value": "" }]
+            },
+            "description": "GET /v1/Accounts/{sid}/Calls/{CallSid} - status, duration, price, recording URL. Confirmed endpoint."
+          }
+        },
+        {
+          "name": "List / bulk-query calls",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/v1/Accounts/{{accountSid}}/Calls.json?DateCreated=&Status=",
+              "host": ["{{baseUrl}}"],
+              "path": ["v1", "Accounts", "{{accountSid}}", "Calls.json"],
+              "query": [
+                { "key": "DateCreated", "value": "" },
+                { "key": "Status", "value": "" }
+              ]
+            },
+            "description": "MODELED path - documented bulk call queries, path follows Exotel Twilio-style convention."
+          }
+        }
+      ]
+    },
+    {
+      "name": "SMS",
+      "item": [
+        {
+          "name": "Send SMS",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/x-www-form-urlencoded" }],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                { "key": "From", "value": "", "description": "ExoPhone or approved Sender ID." },
+                { "key": "To", "value": "", "description": "Recipient (E.164)." },
+                { "key": "Body", "value": "", "description": "Message text (max 2000 chars)." },
+                { "key": "DltEntityId", "value": "", "description": "DLT entity ID (mandatory for India)." },
+                { "key": "DltTemplateId", "value": "", "disabled": true },
+                { "key": "SmsType", "value": "transactional", "disabled": true }
+              ]
+            },
+            "url": {
+              "raw": "{{baseUrl}}/v1/Accounts/{{accountSid}}/Sms/send.json",
+              "host": ["{{baseUrl}}"],
+              "path": ["v1", "Accounts", "{{accountSid}}", "Sms", "send.json"]
+            },
+            "description": "POST /v1/Accounts/{sid}/Sms/send - send a single SMS. Confirmed endpoint; parameters from documented fields."
+          }
+        },
+        {
+          "name": "Get SMS details",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/v1/Accounts/{{accountSid}}/Sms/Messages/:SmsSid.json",
+              "host": ["{{baseUrl}}"],
+              "path": ["v1", "Accounts", "{{accountSid}}", "Sms", "Messages", ":SmsSid.json"],
+              "variable": [{ "key": "SmsSid", "value": "" }]
+            },
+            "description": "MODELED path - documented SMS details lookup, path follows Exotel convention."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Numbers",
+      "item": [
+        {
+          "name": "Get number metadata",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/v1/Accounts/{{accountSid}}/Numbers/:Number.json",
+              "host": ["{{baseUrl}}"],
+              "path": ["v1", "Accounts", "{{accountSid}}", "Numbers", ":Number.json"],
+              "variable": [{ "key": "Number", "value": "" }]
+            },
+            "description": "GET /v1/Accounts/{sid}/Numbers/{Number} - operator/circle, type, DND status. Confirmed endpoint."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Campaigns",
+      "item": [
+        {
+          "name": "List campaigns",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/v2/accounts/{{accountSid}}/campaigns",
+              "host": ["{{baseUrl}}"],
+              "path": ["v2", "accounts", "{{accountSid}}", "campaigns"]
+            },
+            "description": "GET /v2/accounts/{sid}/campaigns. Confirmed v2 resource."
+          }
+        },
+        {
+          "name": "Create campaign",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"name\": \"my-campaign\",\n  \"caller_id\": \"\",\n  \"lists\": [],\n  \"url\": \"\"\n}" },
+            "url": {
+              "raw": "{{baseUrl}}/v2/accounts/{{accountSid}}/campaigns",
+              "host": ["{{baseUrl}}"],
+              "path": ["v2", "accounts", "{{accountSid}}", "campaigns"]
+            },
+            "description": "POST /v2/accounts/{sid}/campaigns. Confirmed endpoint; body modeled."
+          }
+        },
+        {
+          "name": "Get campaign",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/v2/accounts/{{accountSid}}/campaigns/:campaign_id",
+              "host": ["{{baseUrl}}"],
+              "path": ["v2", "accounts", "{{accountSid}}", "campaigns", ":campaign_id"],
+              "variable": [{ "key": "campaign_id", "value": "" }]
+            },
+            "description": "GET /v2/accounts/{sid}/campaigns/{campaign_id}. Confirmed endpoint."
+          }
+        },
+        {
+          "name": "Update / pause / resume campaign",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{}" },
+            "url": {
+              "raw": "{{baseUrl}}/v2/accounts/{{accountSid}}/campaigns/:campaign_id",
+              "host": ["{{baseUrl}}"],
+              "path": ["v2", "accounts", "{{accountSid}}", "campaigns", ":campaign_id"],
+              "variable": [{ "key": "campaign_id", "value": "" }]
+            },
+            "description": "PUT /v2/accounts/{sid}/campaigns/{campaign_id}. Confirmed endpoint."
+          }
+        },
+        {
+          "name": "Delete campaign",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/v2/accounts/{{accountSid}}/campaigns/:campaign_id",
+              "host": ["{{baseUrl}}"],
+              "path": ["v2", "accounts", "{{accountSid}}", "campaigns", ":campaign_id"],
+              "variable": [{ "key": "campaign_id", "value": "" }]
+            },
+            "description": "DELETE /v2/accounts/{sid}/campaigns/{campaign_id}. Confirmed endpoint."
+          }
+        },
+        {
+          "name": "Get campaign call details",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/v2/accounts/{{accountSid}}/campaigns/:campaign_id/call-details",
+              "host": ["{{baseUrl}}"],
+              "path": ["v2", "accounts", "{{accountSid}}", "campaigns", ":campaign_id", "call-details"],
+              "variable": [{ "key": "campaign_id", "value": "" }]
+            },
+            "description": "GET /v2/accounts/{sid}/campaigns/{campaign_id}/call-details. Confirmed endpoint."
+          }
+        }
+      ]
+    }
+  ]
+}

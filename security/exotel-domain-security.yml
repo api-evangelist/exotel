@@ -1,0 +1,46 @@
+generated: '2026-07-12'
+method: probed
+source: live DNS/TLS/HTTP probes of apis.yml + API/docs hosts
+hosts:
+- host: exotel.com
+  https: true
+  cert_issuer: 'C=US, O=Amazon, CN=Amazon RSA 2048 M04'
+  cert_not_before: Apr 17 00:00:00 2026 GMT
+  cert_expires: Oct 31 23:59:59 2026 GMT
+  hsts: true
+  hsts_max_age: 63072000
+  server: nginx/1.28.3
+- host: api.exotel.com
+  https: true
+  cert_issuer: 'C=US, O=Amazon, CN=Amazon RSA 2048 M04'
+  cert_not_before: Jun 15 00:00:00 2026 GMT
+  cert_expires: Dec 29 23:59:59 2026 GMT
+  hsts: false
+  server: Apache
+  notes: >-
+    API host (Singapore cluster). Returns HTTP 400 to an unauthenticated
+    root request, as expected for a credentialed API base.
+- host: developer.exotel.com
+  https: true
+  cert_issuer: 'C=US, O=Amazon, CN=Amazon RSA 2048 M04'
+  cert_not_before: Apr  2 00:00:00 2026 GMT
+  cert_expires: Oct 16 23:59:59 2026 GMT
+  hsts: true
+  hsts_max_age: 63072000
+  hsts_include_subdomains: true
+  hsts_preload: true
+  server: Vercel
+domains:
+- domain: exotel.com
+  dnssec: false
+  caa:
+  - '0 issue "letsencrypt.org"'
+  - '0 issue "amazon.com"'
+  - '0 issuewild "amazon.com"'
+  - '0 issuewild "letsencrypt.org"'
+  - '0 iodef "mailto:itadmin@exotel.com"'
+  spf: true
+  spf_record: 'v=spf1 include:_spf.google.com include:_spf.salesforce.com include:spf.secure.ravenmail.io include:aspmx.pardot.com include:stspg-customer.com -all'
+  dmarc: true
+  dmarc_policy: quarantine
+  dmarc_rua: 'mailto:team-it@exotel.com'

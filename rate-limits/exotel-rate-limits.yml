@@ -1,0 +1,69 @@
+specification: API Commons Rate Limits
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/RateLimits
+provider: Exotel
+providerId: exotel
+created: '2026-07-12'
+modified: '2026-07-12'
+reconciled: false
+tags:
+- Cloud Telephony
+- Voice
+- SMS
+- CPaaS
+- Rate Limiting
+- Quotas
+description: >-
+  Exotel documents a per-minute throughput cap on its Voice APIs and returns
+  HTTP 429 when exceeded. Its developer docs state Voice APIs are limited to
+  around 200 calls per minute. SMS and other product limits are governed by
+  account plan, sender/DLT approvals, and telecom regulations rather than a
+  single published per-endpoint number. Values here are grounded where the
+  docs state a figure and flagged otherwise.
+notes: >-
+  Only the ~200 calls/minute Voice API figure is explicitly documented in the
+  reviewed pages. SMS throughput, campaign concurrency, and per-account
+  quotas depend on plan and regulatory (DLT) approvals; verify current limits
+  with Exotel support or the dashboard during reconciliation.
+sources:
+- https://developer.exotel.com/api
+- https://developer.exotel.com/api/make-a-call-api
+- https://developer.exotel.com/docs/faqs/pricing-plans
+responseCodes:
+  throttled: 429
+limits:
+- name: Voice API Calls
+  scope: account
+  metric: requests
+  limit: ~200 per minute
+  notes: Documented cap on Voice APIs; exceeding it returns HTTP 429.
+- name: Bulk SMS Batch Size
+  scope: request
+  metric: messages
+  limit: up to 100 messages per request
+  notes: Bulk SMS (static/dynamic) accepts up to 100 messages per call per docs.
+- name: SMS Body Length
+  scope: request
+  metric: characters
+  limit: up to 2000 characters
+  notes: Documented maximum SMS Body length.
+- name: AgentStream Session Duration
+  scope: stream
+  metric: minutes
+  limit: up to 60 minutes per streaming session
+  notes: Documented max WebSocket voice-streaming session length; plan-dependent.
+- name: Account / Plan Quotas
+  scope: account
+  metric: usage
+  limit: per plan
+  notes: Not published numerically; governed by plan and DLT/sender approvals.
+policies:
+- name: Throttling Response
+  description: Requests over the documented Voice API rate return HTTP 429; back off and retry.
+- name: Backoff Strategy
+  description: Clients should implement exponential backoff with jitter on 429 responses.
+- name: Streaming Timeout
+  description: If a bot server does not respond within ~10 seconds during an AgentStream session, the session fails.
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

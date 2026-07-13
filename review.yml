@@ -1,0 +1,127 @@
+aid: exotel
+name: Exotel
+review:
+  question: Does Exotel expose a documented public WebSocket API?
+  answer: true
+  date: '2026-07-12'
+  reviewer: API Evangelist
+  asyncapiSpecCreated: true
+  asyncapiScopeNote: |
+    Yes. Exotel AgentStream - surfaced through the Voicebot applet
+    (bidirectional) and the Stream applet (unidirectional) - is a documented
+    public WebSocket API for real-time voice media streaming. When a call
+    reaches a Voicebot/Stream applet in a call flow, Exotel opens a secure
+    WebSocket (wss://) connection to an endpoint you configure and streams
+    the caller's audio as base64-encoded 16-bit mono linear PCM in ~100 ms
+    frames. The message protocol (connected, start, media, dtmf, mark, stop
+    inbound; media, mark, clear outbound) and the audio format are publicly
+    documented in Exotel's AgentStream developer guide. An AsyncAPI 2.6
+    document was authored at asyncapi/exotel-asyncapi.yml. IMPORTANT DIRECTION
+    NOTE: Exotel is the WebSocket CLIENT and YOUR bot/server hosts the wss://
+    endpoint - so there is no fixed Exotel-hosted wss:// URL to connect to;
+    the AsyncAPI models your server as the AsyncAPI "server" that Exotel
+    connects to.
+findings:
+  summary: |
+    Exotel is an Indian cloud telephony / CPaaS provider. Its primary public
+    API is a Twilio-style REST API over region-specific subdomains
+    (https://api.exotel.com for Singapore, https://api.in.exotel.com for
+    Mumbai/India) under /v1/Accounts/{sid}/... (v1 telephony) and
+    /v2/accounts/{sid}/... (v2 Campaigns), authenticated with HTTP Basic
+    where the API Key is the username and the API Token is the password
+    (credentials may also be embedded in the URL). Exotel APIs return XML by
+    default; appending .json to a resource yields JSON.
+
+    Separately, Exotel DOES expose a documented public WebSocket API:
+    AgentStream / the Voicebot and Stream applets. This is a genuine
+    bidirectional wss:// media protocol (not HTTP SSE), so the WebSocket
+    question is answered true and an AsyncAPI 2.6 document was created.
+  transports:
+    - protocol: REST
+      scheme: https
+      baseURL: https://api.exotel.com/v1/Accounts
+      documented: true
+      note: >-
+        v1 telephony (Calls, Sms, Numbers). Mumbai region base is
+        https://api.in.exotel.com. v2 base is /v2/accounts for Campaigns.
+        XML by default; append .json for JSON.
+    - protocol: WebSocket
+      scheme: wss
+      documented: true
+      note: >-
+        AgentStream / Voicebot + Stream applets. Exotel opens a wss://
+        connection to YOUR configured endpoint and streams base64 linear-PCM
+        audio; Voicebot applet is bidirectional (your server sends
+        media/mark/clear back). Documented message protocol and audio format.
+        Modeled in asyncapi/exotel-asyncapi.yml.
+    - protocol: Webhook
+      scheme: https
+      documented: true
+      note: >-
+        StatusCallback / passthru webhooks deliver call and SMS state to your
+        HTTP endpoint. Server-to-endpoint HTTP, not WebSocket.
+  websocketPrecision: |
+    The WebSocket surface is real and documented, but the connection
+    direction is inverted from the usual "client connects to a vendor
+    wss:// URL" pattern: Exotel is the WebSocket CLIENT and the developer
+    hosts the wss:// server endpoint (supplied in the Voicebot/Stream applet
+    config). There is therefore no single canonical Exotel-hosted wss:// URL.
+    The AsyncAPI reflects this by modeling the developer's endpoint as the
+    server Exotel connects to.
+  endpointsConfirmedRest:
+    - POST   https://api.exotel.com/v1/Accounts/{sid}/Calls/connect
+    - GET    https://api.exotel.com/v1/Accounts/{sid}/Calls/{CallSid}
+    - GET    https://api.exotel.com/v1/Accounts/{sid}/Numbers/{Number}
+    - POST   https://api.exotel.com/v1/Accounts/{sid}/Sms/send
+    - POST   https://api.exotel.com/v2/accounts/{sid}/campaigns
+    - GET    https://api.exotel.com/v2/accounts/{sid}/campaigns/{campaign_id}
+    - PUT    https://api.exotel.com/v2/accounts/{sid}/campaigns/{campaign_id}
+    - DELETE https://api.exotel.com/v2/accounts/{sid}/campaigns/{campaign_id}
+    - GET    https://api.exotel.com/v2/accounts/{sid}/campaigns/{campaign_id}/call-details
+  endpointsModeled:
+    - GET https://api.exotel.com/v1/Accounts/{sid}/Calls (bulk list; documented as supported, path follows Exotel Twilio-style convention)
+    - GET https://api.exotel.com/v1/Accounts/{sid}/Sms/Messages/{SmsSid} (SMS details; documented as supported, path follows Exotel convention)
+  schemaStatus: |
+    Endpoint paths and methods above are confirmed from Exotel developer
+    docs. Request/response FIELD schemas in the OpenAPI are modeled from
+    documented parameter lists and Exotel's Twilio-style conventions - Exotel
+    does not publish a machine-readable OpenAPI. The AgentStream AsyncAPI
+    message shapes are grounded in the documented example JSON messages.
+websocketEndpointsDocumented:
+  - direction: Exotel -> your server
+    events: [connected, start, media, dtmf, mark, stop]
+    note: dtmf and mark are Voicebot-applet only.
+  - direction: your server -> Exotel (Voicebot applet only)
+    events: [media, mark, clear]
+sources:
+  - url: https://developer.exotel.com/api
+    type: APIReference
+    note: Voice v1 endpoints (Calls/connect, Calls/{CallSid}, Numbers/{Number}); regional subdomains; 200 calls/min rate limit.
+  - url: https://developer.exotel.com/api/make-a-call-api
+    type: APIReference
+    note: POST /v1/Accounts/{sid}/Calls/connect - connect two numbers; From/To/CallerId + optional Record, TimeLimit, StatusCallback.
+  - url: https://developer.exotel.com/api/sms
+    type: Documentation
+    note: SMS API overview - Send SMS, SMS Details, Bulk SMS.
+  - url: https://developer.exotel.com/docs/sms-api/api-reference/send-sms
+    type: APIReference
+    note: POST /v1/Accounts/{sid}/Sms/send parameters incl. DltEntityId/DltTemplateId for India.
+  - url: https://developer.exotel.com/docs/references/authentication
+    type: Documentation
+    note: HTTP Basic auth - API Key = username, API Token = password; URL-embedded or Authorization header; regional subdomains.
+  - url: https://developer.exotel.com/docs/agentstream/developer-guide
+    type: Documentation
+    note: AgentStream WebSocket voice streaming - wss://, event protocol, base64 linear PCM audio format.
+  - url: https://exotel.com/pricing/
+    type: Pricing
+    note: Prepaid credit bundles (1 credit = 1 INR), per-minute voice and per-SMS usage, number rental, seat pricing.
+actions:
+  asyncapiPath: asyncapi/exotel-asyncapi.yml
+  apisYmlUpdated: true
+  reason: |
+    A documented public WebSocket protocol surface exists (AgentStream /
+    Voicebot + Stream applets), so the WebSocket question is answered true and
+    an AsyncAPI 2.6 document was authored. The direction is inverted (Exotel is
+    the WebSocket client connecting to a developer-hosted endpoint), which is
+    recorded explicitly in the AsyncAPI and in websocketPrecision above so the
+    surface is never misrepresented as an Exotel-hosted wss:// URL.

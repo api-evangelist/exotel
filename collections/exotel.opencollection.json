@@ -1,0 +1,193 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Exotel API",
+    "version": "1.0",
+    "description": "Representative subset of Exotel's Twilio-style cloud telephony REST API. Base URL is region-specific: https://api.exotel.com (Singapore) or https://api.in.exotel.com (Mumbai/India). Auth is HTTP Basic with API Key (username) and API Token (password); Account SID appears in every path. XML by default - append .json for JSON. Endpoint paths/methods confirmed from Exotel docs; field schemas modeled."
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{apiKey}}",
+      "password": "{{apiToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": { "name": "Voice", "type": "folder" },
+      "items": [
+        {
+          "info": { "name": "Connect two numbers / connect to a call flow", "type": "http" },
+          "http": {
+            "method": "POST",
+            "url": "https://api.exotel.com/v1/Accounts/:sid/Calls/connect.json",
+            "params": [
+              { "name": "sid", "value": "", "type": "path", "description": "Account SID." }
+            ],
+            "body": {
+              "type": "urlencoded",
+              "data": "From=&To=&CallerId=&Url=&Record=true"
+            }
+          },
+          "docs": "POST /v1/Accounts/{sid}/Calls/connect - connect two numbers, or connect a number to an Exotel call flow via the Url parameter. Confirmed endpoint."
+        }
+      ]
+    },
+    {
+      "info": { "name": "Call Details", "type": "folder" },
+      "items": [
+        {
+          "info": { "name": "Get call details", "type": "http" },
+          "http": {
+            "method": "GET",
+            "url": "https://api.exotel.com/v1/Accounts/:sid/Calls/:CallSid.json",
+            "params": [
+              { "name": "sid", "value": "", "type": "path", "description": "Account SID." },
+              { "name": "CallSid", "value": "", "type": "path", "description": "Call Sid." }
+            ]
+          },
+          "docs": "GET /v1/Accounts/{sid}/Calls/{CallSid} - status, duration, price, recording URL. Confirmed endpoint."
+        },
+        {
+          "info": { "name": "List / bulk-query calls", "type": "http" },
+          "http": {
+            "method": "GET",
+            "url": "https://api.exotel.com/v1/Accounts/:sid/Calls.json",
+            "params": [
+              { "name": "sid", "value": "", "type": "path", "description": "Account SID." },
+              { "name": "DateCreated", "value": "", "type": "query" },
+              { "name": "Status", "value": "", "type": "query" }
+            ]
+          },
+          "docs": "MODELED path - documented bulk call queries, path follows Exotel Twilio-style convention."
+        }
+      ]
+    },
+    {
+      "info": { "name": "SMS", "type": "folder" },
+      "items": [
+        {
+          "info": { "name": "Send SMS", "type": "http" },
+          "http": {
+            "method": "POST",
+            "url": "https://api.exotel.com/v1/Accounts/:sid/Sms/send.json",
+            "params": [
+              { "name": "sid", "value": "", "type": "path", "description": "Account SID." }
+            ],
+            "body": {
+              "type": "urlencoded",
+              "data": "From=&To=&Body=&DltEntityId=&SmsType=transactional"
+            }
+          },
+          "docs": "POST /v1/Accounts/{sid}/Sms/send - send a single SMS. India traffic needs DltEntityId. Confirmed endpoint."
+        },
+        {
+          "info": { "name": "Get SMS details", "type": "http" },
+          "http": {
+            "method": "GET",
+            "url": "https://api.exotel.com/v1/Accounts/:sid/Sms/Messages/:SmsSid.json",
+            "params": [
+              { "name": "sid", "value": "", "type": "path", "description": "Account SID." },
+              { "name": "SmsSid", "value": "", "type": "path", "description": "SMS Sid." }
+            ]
+          },
+          "docs": "MODELED path - documented SMS details lookup, path follows Exotel convention."
+        }
+      ]
+    },
+    {
+      "info": { "name": "Numbers", "type": "folder" },
+      "items": [
+        {
+          "info": { "name": "Get number metadata", "type": "http" },
+          "http": {
+            "method": "GET",
+            "url": "https://api.exotel.com/v1/Accounts/:sid/Numbers/:Number.json",
+            "params": [
+              { "name": "sid", "value": "", "type": "path", "description": "Account SID." },
+              { "name": "Number", "value": "", "type": "path", "description": "Phone number (E.164)." }
+            ]
+          },
+          "docs": "GET /v1/Accounts/{sid}/Numbers/{Number} - operator/circle, type, DND status. Confirmed endpoint."
+        }
+      ]
+    },
+    {
+      "info": { "name": "Campaigns", "type": "folder" },
+      "items": [
+        {
+          "info": { "name": "List campaigns", "type": "http" },
+          "http": {
+            "method": "GET",
+            "url": "https://api.exotel.com/v2/accounts/:sid/campaigns",
+            "params": [
+              { "name": "sid", "value": "", "type": "path", "description": "Account SID." }
+            ]
+          },
+          "docs": "GET /v2/accounts/{sid}/campaigns. Confirmed v2 resource."
+        },
+        {
+          "info": { "name": "Create campaign", "type": "http" },
+          "http": {
+            "method": "POST",
+            "url": "https://api.exotel.com/v2/accounts/:sid/campaigns",
+            "params": [
+              { "name": "sid", "value": "", "type": "path", "description": "Account SID." }
+            ],
+            "body": { "type": "json", "data": "{\"name\":\"my-campaign\",\"caller_id\":\"\",\"lists\":[],\"url\":\"\"}" }
+          },
+          "docs": "POST /v2/accounts/{sid}/campaigns. Confirmed endpoint; body modeled."
+        },
+        {
+          "info": { "name": "Get campaign", "type": "http" },
+          "http": {
+            "method": "GET",
+            "url": "https://api.exotel.com/v2/accounts/:sid/campaigns/:campaign_id",
+            "params": [
+              { "name": "sid", "value": "", "type": "path", "description": "Account SID." },
+              { "name": "campaign_id", "value": "", "type": "path" }
+            ]
+          },
+          "docs": "GET /v2/accounts/{sid}/campaigns/{campaign_id}. Confirmed endpoint."
+        },
+        {
+          "info": { "name": "Update / pause / resume campaign", "type": "http" },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.exotel.com/v2/accounts/:sid/campaigns/:campaign_id",
+            "params": [
+              { "name": "sid", "value": "", "type": "path", "description": "Account SID." },
+              { "name": "campaign_id", "value": "", "type": "path" }
+            ],
+            "body": { "type": "json", "data": "{}" }
+          },
+          "docs": "PUT /v2/accounts/{sid}/campaigns/{campaign_id}. Confirmed endpoint."
+        },
+        {
+          "info": { "name": "Delete campaign", "type": "http" },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.exotel.com/v2/accounts/:sid/campaigns/:campaign_id",
+            "params": [
+              { "name": "sid", "value": "", "type": "path", "description": "Account SID." },
+              { "name": "campaign_id", "value": "", "type": "path" }
+            ]
+          },
+          "docs": "DELETE /v2/accounts/{sid}/campaigns/{campaign_id}. Confirmed endpoint."
+        },
+        {
+          "info": { "name": "Get campaign call details", "type": "http" },
+          "http": {
+            "method": "GET",
+            "url": "https://api.exotel.com/v2/accounts/:sid/campaigns/:campaign_id/call-details",
+            "params": [
+              { "name": "sid", "value": "", "type": "path", "description": "Account SID." },
+              { "name": "campaign_id", "value": "", "type": "path" }
+            ]
+          },
+          "docs": "GET /v2/accounts/{sid}/campaigns/{campaign_id}/call-details. Confirmed endpoint."
+        }
+      ]
+    }
+  ]
+}

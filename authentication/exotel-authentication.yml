@@ -1,0 +1,27 @@
+generated: '2026-07-12'
+method: documented
+source: https://developer.exotel.com/docs/references/authentication
+summary:
+  types:
+  - http
+schemes:
+- name: basicAuth
+  type: http
+  scheme: basic
+  description: >-
+    HTTP Basic authentication (RFC 7617). The API Key is the username and the
+    API Token is the password; both, with the Account SID, come from the
+    Exotel Dashboard -> Settings -> API Settings. Credentials may be passed as
+    an `Authorization: Basic base64(<api_key>:<api_token>)` header (recommended
+    for production) or embedded directly in the request URL as
+    `https://<api_key>:<api_token>@<subdomain>/v1/Accounts/<account_sid>/...`.
+    Region subdomains: api.exotel.com (Singapore, default) or api.in.exotel.com
+    (Mumbai/India). The Account SID also appears in every endpoint path.
+  sources:
+  - https://developer.exotel.com/docs/references/authentication
+  - https://developer.exotel.com/api/make-a-call-api
+notes: >-
+  The AgentStream WebSocket (wss://) surface does not use this API Basic auth:
+  Exotel connects outbound to a developer-hosted endpoint, and any auth is
+  whatever you enforce on your own wss:// endpoint (e.g. a token in the applet
+  URL surfaced back as custom_parameters).
