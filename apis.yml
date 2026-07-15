@@ -157,6 +157,8 @@ apis:
     the Voicebot applet is bidirectional so your server sends media/mark/clear back to
     speak to the caller and barge in. Exotel is the WebSocket client; you host the endpoint.
 common:
+- type: AgenticAccess
+  url: agentic-access/exotel-agentic-access.yml
 - type: DomainSecurity
   url: security/exotel-domain-security.yml
 - type: Authentication
