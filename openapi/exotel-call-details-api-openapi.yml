@@ -1,0 +1,159 @@
+openapi: 3.0.3
+info:
+  title: Exotel Call Details API
+  description: 'Exotel is an Indian cloud telephony and customer-engagement (CPaaS) platform. This OpenAPI describes a representative, grounded subset of Exotel''s documented public REST API: placing outbound voice calls (connect two numbers, or connect a number to a call flow / applet), sending SMS, retrieving call details, looking up phone-number metadata, and managing call campaigns.
+
+
+    Base URL is region-specific and Twilio-style: `https://<subdomain>/v1/Accounts/<account_sid>/...` for the v1 telephony APIs and `https://<subdomain>/v2/accounts/<account_sid>/...` for the v2 Campaigns API. All requests use HTTP Basic authentication with your API Key as the username and API Token as the password (credentials may also be embedded in the URL as `https://<key>:<token>@<subdomain>/...`).
+
+
+    GROUNDING NOTE: Endpoint paths and HTTP methods for Calls/connect, Calls/{CallSid}, Numbers/{Number}, Sms/send, and the v2 Campaigns resource are confirmed from Exotel''s developer docs. Request/response SCHEMAS below are MODELED from the documented parameter lists and Exotel''s Twilio-style conventions - Exotel does not publish a machine OpenAPI, so field-level schemas should be verified against the live docs before production use. Exotel APIs return XML by default; append `.json` to a resource path to receive JSON (shown here as the JSON variants).'
+  version: '1.0'
+  contact:
+    name: Exotel Developer Support
+    url: https://developer.exotel.com
+  x-grounding:
+    confirmedEndpoints:
+    - POST /v1/Accounts/{sid}/Calls/connect
+    - GET /v1/Accounts/{sid}/Calls/{CallSid}
+    - GET /v1/Accounts/{sid}/Numbers/{Number}
+    - POST /v1/Accounts/{sid}/Sms/send
+    - POST /v2/accounts/{sid}/campaigns
+    - GET /v2/accounts/{sid}/campaigns/{campaign_id}
+    - GET /v2/accounts/{sid}/campaigns/{campaign_id}/call-details
+    modeledEndpoints:
+    - GET /v1/Accounts/{sid}/Calls (bulk list; documented as existing, path follows Exotel convention)
+    - GET /v1/Accounts/{sid}/Sms/Messages/{SmsSid} (SMS details; documented as existing, path follows Exotel convention)
+    schemaStatus: All request/response body and form-field schemas are modeled from documented parameter lists, not from a vendor-published OpenAPI.
+servers:
+- url: https://api.exotel.com
+  description: Singapore cluster (default)
+- url: https://api.in.exotel.com
+  description: Mumbai / India cluster
+security:
+- basicAuth: []
+tags:
+- name: Call Details
+  description: Retrieve details of past and in-progress calls.
+paths:
+  /v1/Accounts/{sid}/Calls/{CallSid}.json:
+    parameters:
+    - $ref: '#/components/parameters/AccountSid'
+    - name: CallSid
+      in: path
+      required: true
+      description: The unique Sid of the call to retrieve.
+      schema:
+        type: string
+    get:
+      operationId: getCallDetails
+      tags:
+      - Call Details
+      summary: Get details of a single call
+      description: Retrieves details (status, direction, duration, price, recording URL) for a call by its Sid. Confirmed endpoint; response schema modeled.
+      responses:
+        '200':
+          description: Call details.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CallResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /v1/Accounts/{sid}/Calls.json:
+    parameters:
+    - $ref: '#/components/parameters/AccountSid'
+    get:
+      operationId: listCalls
+      tags:
+      - Call Details
+      summary: List / bulk-query calls
+      description: Lists calls for the account, filterable by date and status. MODELED path - Exotel documents bulk call queries, and this path follows Exotel's Twilio-style convention; verify against live docs.
+      parameters:
+      - name: DateCreated
+        in: query
+        required: false
+        description: Filter by creation date (YYYY-MM-DD).
+        schema:
+          type: string
+      - name: Status
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - queued
+          - in-progress
+          - completed
+          - failed
+          - busy
+          - no-answer
+      responses:
+        '200':
+          description: A page of call records.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  Calls:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/CallResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+components:
+  responses:
+    Unauthorized:
+      description: Missing or invalid API Key/Token.
+    NotFound:
+      description: Resource not found.
+  parameters:
+    AccountSid:
+      name: sid
+      in: path
+      required: true
+      description: Your Exotel account Sid (Account SID).
+      schema:
+        type: string
+  schemas:
+    CallResponse:
+      type: object
+      properties:
+        Sid:
+          type: string
+        AccountSid:
+          type: string
+        Status:
+          type: string
+          enum:
+          - queued
+          - in-progress
+          - completed
+          - failed
+          - busy
+          - no-answer
+        From:
+          type: string
+        To:
+          type: string
+        PhoneNumberSid:
+          type: string
+          description: The ExoPhone / virtual number used.
+        Direction:
+          type: string
+        Duration:
+          type: integer
+        Price:
+          type: string
+        RecordingUrl:
+          type: string
+        DateCreated:
+          type: string
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+      description: HTTP Basic authentication. Username = API Key, Password = API Token (both from Exotel Dashboard -> Settings -> API Settings). May also be embedded in the URL as https://<key>:<token>@<subdomain>/...

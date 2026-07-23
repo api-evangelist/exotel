@@ -1,0 +1,257 @@
+openapi: 3.0.3
+info:
+  title: Exotel Call Details Campaigns API
+  description: 'Exotel is an Indian cloud telephony and customer-engagement (CPaaS) platform. This OpenAPI describes a representative, grounded subset of Exotel''s documented public REST API: placing outbound voice calls (connect two numbers, or connect a number to a call flow / applet), sending SMS, retrieving call details, looking up phone-number metadata, and managing call campaigns.
+
+
+    Base URL is region-specific and Twilio-style: `https://<subdomain>/v1/Accounts/<account_sid>/...` for the v1 telephony APIs and `https://<subdomain>/v2/accounts/<account_sid>/...` for the v2 Campaigns API. All requests use HTTP Basic authentication with your API Key as the username and API Token as the password (credentials may also be embedded in the URL as `https://<key>:<token>@<subdomain>/...`).
+
+
+    GROUNDING NOTE: Endpoint paths and HTTP methods for Calls/connect, Calls/{CallSid}, Numbers/{Number}, Sms/send, and the v2 Campaigns resource are confirmed from Exotel''s developer docs. Request/response SCHEMAS below are MODELED from the documented parameter lists and Exotel''s Twilio-style conventions - Exotel does not publish a machine OpenAPI, so field-level schemas should be verified against the live docs before production use. Exotel APIs return XML by default; append `.json` to a resource path to receive JSON (shown here as the JSON variants).'
+  version: '1.0'
+  contact:
+    name: Exotel Developer Support
+    url: https://developer.exotel.com
+  x-grounding:
+    confirmedEndpoints:
+    - POST /v1/Accounts/{sid}/Calls/connect
+    - GET /v1/Accounts/{sid}/Calls/{CallSid}
+    - GET /v1/Accounts/{sid}/Numbers/{Number}
+    - POST /v1/Accounts/{sid}/Sms/send
+    - POST /v2/accounts/{sid}/campaigns
+    - GET /v2/accounts/{sid}/campaigns/{campaign_id}
+    - GET /v2/accounts/{sid}/campaigns/{campaign_id}/call-details
+    modeledEndpoints:
+    - GET /v1/Accounts/{sid}/Calls (bulk list; documented as existing, path follows Exotel convention)
+    - GET /v1/Accounts/{sid}/Sms/Messages/{SmsSid} (SMS details; documented as existing, path follows Exotel convention)
+    schemaStatus: All request/response body and form-field schemas are modeled from documented parameter lists, not from a vendor-published OpenAPI.
+servers:
+- url: https://api.exotel.com
+  description: Singapore cluster (default)
+- url: https://api.in.exotel.com
+  description: Mumbai / India cluster
+security:
+- basicAuth: []
+tags:
+- name: Campaigns
+  description: Create and manage bulk outbound call campaigns (v2).
+paths:
+  /v2/accounts/{sid}/campaigns:
+    parameters:
+    - $ref: '#/components/parameters/AccountSid'
+    get:
+      operationId: listCampaigns
+      tags:
+      - Campaigns
+      summary: List campaigns
+      description: Lists call campaigns for the account. Confirmed v2 resource; schema modeled.
+      responses:
+        '200':
+          description: A list of campaigns.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  response:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Campaign'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    post:
+      operationId: createCampaign
+      tags:
+      - Campaigns
+      summary: Create a campaign
+      description: Creates a new outbound call campaign against a list of numbers and a call flow / caller ID. Confirmed endpoint; body schema modeled.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CampaignInput'
+      responses:
+        '200':
+          description: Campaign created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Campaign'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /v2/accounts/{sid}/campaigns/{campaign_id}:
+    parameters:
+    - $ref: '#/components/parameters/AccountSid'
+    - name: campaign_id
+      in: path
+      required: true
+      schema:
+        type: string
+    get:
+      operationId: getCampaign
+      tags:
+      - Campaigns
+      summary: Get a campaign
+      description: Retrieves a single campaign's configuration and status. Confirmed endpoint; schema modeled.
+      responses:
+        '200':
+          description: Campaign details.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Campaign'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    put:
+      operationId: updateCampaign
+      tags:
+      - Campaigns
+      summary: Update / pause / resume a campaign
+      description: Updates campaign configuration or state (e.g. pause, resume). Confirmed endpoint; schema modeled.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CampaignInput'
+      responses:
+        '200':
+          description: Campaign updated.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Campaign'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    delete:
+      operationId: deleteCampaign
+      tags:
+      - Campaigns
+      summary: Delete a campaign
+      description: Deletes a campaign. Confirmed endpoint.
+      responses:
+        '200':
+          description: Campaign deleted.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /v2/accounts/{sid}/campaigns/{campaign_id}/call-details:
+    parameters:
+    - $ref: '#/components/parameters/AccountSid'
+    - name: campaign_id
+      in: path
+      required: true
+      schema:
+        type: string
+    get:
+      operationId: getCampaignCallDetails
+      tags:
+      - Campaigns
+      summary: Get campaign call details
+      description: Retrieves per-call records for a campaign. Confirmed endpoint; schema modeled.
+      responses:
+        '200':
+          description: Campaign call records.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  response:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/CallResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+components:
+  parameters:
+    AccountSid:
+      name: sid
+      in: path
+      required: true
+      description: Your Exotel account Sid (Account SID).
+      schema:
+        type: string
+  responses:
+    Unauthorized:
+      description: Missing or invalid API Key/Token.
+    NotFound:
+      description: Resource not found.
+  schemas:
+    CampaignInput:
+      type: object
+      properties:
+        name:
+          type: string
+        caller_id:
+          type: string
+        lists:
+          type: array
+          items:
+            type: string
+          description: List IDs of contacts to dial.
+        campaign_type:
+          type: string
+        url:
+          type: string
+          description: Call-flow URL to run for each connected call.
+        schedule:
+          type: object
+          additionalProperties: true
+    CallResponse:
+      type: object
+      properties:
+        Sid:
+          type: string
+        AccountSid:
+          type: string
+        Status:
+          type: string
+          enum:
+          - queued
+          - in-progress
+          - completed
+          - failed
+          - busy
+          - no-answer
+        From:
+          type: string
+        To:
+          type: string
+        PhoneNumberSid:
+          type: string
+          description: The ExoPhone / virtual number used.
+        Direction:
+          type: string
+        Duration:
+          type: integer
+        Price:
+          type: string
+        RecordingUrl:
+          type: string
+        DateCreated:
+          type: string
+    Campaign:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        status:
+          type: string
+        caller_id:
+          type: string
+        type:
+          type: string
+        created_at:
+          type: string
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+      description: HTTP Basic authentication. Username = API Key, Password = API Token (both from Exotel Dashboard -> Settings -> API Settings). May also be embedded in the URL as https://<key>:<token>@<subdomain>/...
