@@ -10,7 +10,20 @@ description: Exotel is an Indian cloud telephony and customer-engagement (CPaaS)
   subdomains (api.exotel.com for Singapore, api.in.exotel.com for Mumbai/India) using
   HTTP Basic auth with an API Key and API Token. Exotel AgentStream adds a documented
   WebSocket voice-streaming API for real-time voicebots.
-image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+accessModel:
+  pricing: freemium
+  onboarding: self-serve
+  trial: true
+  try_now: true
+  public: false
+  label: Freemium (free trial) · Self-serve signup
+  confidence: high
+  source:
+  - plans
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/exotel.png
 tags:
 - Cloud Telephony
 - Voice
@@ -26,116 +39,6 @@ created: '2026-07-12'
 modified: '2026-07-12'
 specificationVersion: '0.19'
 apis:
-- aid: exotel:exotel-voice-call-api
-  name: Exotel Voice Call API
-  tags:
-  - Voice
-  - Calls
-  - IVR
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  humanURL: https://developer.exotel.com/api/make-a-call-api
-  baseURL: https://api.exotel.com/v1/Accounts
-  properties:
-  - url: https://developer.exotel.com/api/make-a-call-api
-    type: Documentation
-  - url: https://developer.exotel.com/api/make-a-call-api
-    type: APIReference
-  - url: openapi/exotel-openapi.yml
-    type: OpenAPI
-  - url: collections/exotel.postman_collection.json
-    type: PostmanCollection
-  - url: collections/exotel.opencollection.json
-    type: OpenCollection
-  description: Place outbound voice calls via POST /v1/Accounts/{sid}/Calls/connect -
-    either connect two phone numbers (call From, then bridge to To) or connect a
-    number to an Exotel call flow / applet via the Url parameter. Supports recording,
-    time limits, wait audio, and status callbacks.
-- aid: exotel:exotel-call-details-api
-  name: Exotel Call Details API
-  tags:
-  - Calls
-  - Call Details
-  - Reporting
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  humanURL: https://developer.exotel.com/api
-  baseURL: https://api.exotel.com/v1/Accounts
-  properties:
-  - url: https://developer.exotel.com/api
-    type: Documentation
-  - url: openapi/exotel-openapi.yml
-    type: OpenAPI
-  - url: collections/exotel.postman_collection.json
-    type: PostmanCollection
-  - url: collections/exotel.opencollection.json
-    type: OpenCollection
-  description: Retrieve details of a single call by Sid (GET /v1/Accounts/{sid}/Calls/{CallSid})
-    including status, direction, duration, price, and recording URL, plus bulk call
-    queries filterable by date and status.
-- aid: exotel:exotel-sms-api
-  name: Exotel SMS API
-  tags:
-  - SMS
-  - Messaging
-  - DLT
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  humanURL: https://developer.exotel.com/api/sms
-  baseURL: https://api.exotel.com/v1/Accounts
-  properties:
-  - url: https://developer.exotel.com/api/sms
-    type: Documentation
-  - url: https://developer.exotel.com/docs/sms-api/api-reference/send-sms
-    type: APIReference
-  - url: openapi/exotel-openapi.yml
-    type: OpenAPI
-  - url: collections/exotel.postman_collection.json
-    type: PostmanCollection
-  - url: collections/exotel.opencollection.json
-    type: OpenCollection
-  description: Send single SMS from an ExoPhone or approved Sender ID via POST
-    /v1/Accounts/{sid}/Sms/send, with India DLT entity/template support, encoding and
-    priority options, delivery status callbacks, and message-detail lookup.
-- aid: exotel:exotel-numbers-api
-  name: Exotel Numbers API
-  tags:
-  - Numbers
-  - Metadata
-  - Telecom
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  humanURL: https://developer.exotel.com/api
-  baseURL: https://api.exotel.com/v1/Accounts
-  properties:
-  - url: https://developer.exotel.com/api
-    type: Documentation
-  - url: openapi/exotel-openapi.yml
-    type: OpenAPI
-  - url: collections/exotel.postman_collection.json
-    type: PostmanCollection
-  - url: collections/exotel.opencollection.json
-    type: OpenCollection
-  description: Look up telecom metadata for a phone number via GET
-    /v1/Accounts/{sid}/Numbers/{Number} - operator/circle, number type, and DND status
-    where available for Indian numbers.
-- aid: exotel:exotel-campaigns-api
-  name: Exotel Campaigns API
-  tags:
-  - Campaigns
-  - Outbound
-  - Bulk
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  humanURL: https://developer.exotel.com/api
-  baseURL: https://api.exotel.com/v2/accounts
-  properties:
-  - url: https://developer.exotel.com/api
-    type: Documentation
-  - url: openapi/exotel-openapi.yml
-    type: OpenAPI
-  - url: collections/exotel.postman_collection.json
-    type: PostmanCollection
-  - url: collections/exotel.opencollection.json
-    type: OpenCollection
-  description: Create, list, get, update (pause/resume), and delete bulk outbound call
-    campaigns under the v2 API (POST/GET/PUT/DELETE /v2/accounts/{sid}/campaigns), and
-    pull per-call records via campaigns/{id}/call-details.
 - aid: exotel:exotel-agentstream-voice-streaming-api
   name: Exotel AgentStream Voice Streaming API
   tags:
@@ -151,11 +54,132 @@ apis:
     type: Documentation
   - url: asyncapi/exotel-asyncapi.yml
     type: AsyncAPI
-  description: Documented WebSocket (wss://) voice-streaming API. When a call reaches a
-    Voicebot or Stream applet, Exotel opens a secure WebSocket to your endpoint and
-    streams base64 linear-PCM audio in ~100 ms frames (connected/start/media/dtmf/mark/stop);
-    the Voicebot applet is bidirectional so your server sends media/mark/clear back to
-    speak to the caller and barge in. Exotel is the WebSocket client; you host the endpoint.
+  description: >-
+    Documented WebSocket (wss://) voice-streaming API. When a call reaches a Voicebot or Stream applet,
+    Exotel opens a secure WebSocket to your endpoint and streams base64 linear-PCM audio in ~100 ms frames
+    (connected/start/media/dtmf/mark/stop); the Voicebot applet is bidirectional so your server sends
+    media/mark/clear back to speak to the caller and barge in. Exotel is the WebSocket client; you host
+    the endpoint.
+- aid: exotel:exotel-call-details-api
+  name: Exotel Call Details API
+  description: Retrieve details of past and in-progress calls.
+  humanURL: https://developer.exotel.com/api/make-a-call-api
+  baseURL: https://api.exotel.com/v1/Accounts
+  tags:
+  - Call Details
+  properties:
+  - type: OpenAPI
+    url: openapi/exotel-call-details-api-openapi.yml
+  - type: Documentation
+    url: https://developer.exotel.com/api/make-a-call-api
+  - type: APIReference
+    url: https://developer.exotel.com/api/make-a-call-api
+  - type: PostmanCollection
+    url: collections/exotel.postman_collection.json
+  - type: OpenCollection
+    url: collections/exotel.opencollection.json
+  - type: Documentation
+    url: https://developer.exotel.com/api
+  - type: Documentation
+    url: https://developer.exotel.com/api/sms
+  - type: APIReference
+    url: https://developer.exotel.com/docs/sms-api/api-reference/send-sms
+- aid: exotel:exotel-campaigns-api
+  name: Exotel Campaigns API
+  description: Create and manage bulk outbound call campaigns (v2).
+  humanURL: https://developer.exotel.com/api/make-a-call-api
+  baseURL: https://api.exotel.com/v1/Accounts
+  tags:
+  - Campaigns
+  properties:
+  - type: OpenAPI
+    url: openapi/exotel-campaigns-api-openapi.yml
+  - type: Documentation
+    url: https://developer.exotel.com/api/make-a-call-api
+  - type: APIReference
+    url: https://developer.exotel.com/api/make-a-call-api
+  - type: PostmanCollection
+    url: collections/exotel.postman_collection.json
+  - type: OpenCollection
+    url: collections/exotel.opencollection.json
+  - type: Documentation
+    url: https://developer.exotel.com/api
+  - type: Documentation
+    url: https://developer.exotel.com/api/sms
+  - type: APIReference
+    url: https://developer.exotel.com/docs/sms-api/api-reference/send-sms
+- aid: exotel:exotel-numbers-api
+  name: Exotel Numbers API
+  description: Look up telecom metadata for phone numbers.
+  humanURL: https://developer.exotel.com/api/make-a-call-api
+  baseURL: https://api.exotel.com/v1/Accounts
+  tags:
+  - Numbers
+  properties:
+  - type: OpenAPI
+    url: openapi/exotel-numbers-api-openapi.yml
+  - type: Documentation
+    url: https://developer.exotel.com/api/make-a-call-api
+  - type: APIReference
+    url: https://developer.exotel.com/api/make-a-call-api
+  - type: PostmanCollection
+    url: collections/exotel.postman_collection.json
+  - type: OpenCollection
+    url: collections/exotel.opencollection.json
+  - type: Documentation
+    url: https://developer.exotel.com/api
+  - type: Documentation
+    url: https://developer.exotel.com/api/sms
+  - type: APIReference
+    url: https://developer.exotel.com/docs/sms-api/api-reference/send-sms
+- aid: exotel:exotel-sms-api
+  name: Exotel SMS API
+  description: Send SMS and retrieve message details.
+  humanURL: https://developer.exotel.com/api/make-a-call-api
+  baseURL: https://api.exotel.com/v1/Accounts
+  tags:
+  - SMS
+  properties:
+  - type: OpenAPI
+    url: openapi/exotel-sms-api-openapi.yml
+  - type: Documentation
+    url: https://developer.exotel.com/api/make-a-call-api
+  - type: APIReference
+    url: https://developer.exotel.com/api/make-a-call-api
+  - type: PostmanCollection
+    url: collections/exotel.postman_collection.json
+  - type: OpenCollection
+    url: collections/exotel.opencollection.json
+  - type: Documentation
+    url: https://developer.exotel.com/api
+  - type: Documentation
+    url: https://developer.exotel.com/api/sms
+  - type: APIReference
+    url: https://developer.exotel.com/docs/sms-api/api-reference/send-sms
+- aid: exotel:exotel-voice-api
+  name: Exotel Voice API
+  description: Place and control outbound voice calls.
+  humanURL: https://developer.exotel.com/api/make-a-call-api
+  baseURL: https://api.exotel.com/v1/Accounts
+  tags:
+  - Voice
+  properties:
+  - type: OpenAPI
+    url: openapi/exotel-voice-api-openapi.yml
+  - type: Documentation
+    url: https://developer.exotel.com/api/make-a-call-api
+  - type: APIReference
+    url: https://developer.exotel.com/api/make-a-call-api
+  - type: PostmanCollection
+    url: collections/exotel.postman_collection.json
+  - type: OpenCollection
+    url: collections/exotel.opencollection.json
+  - type: Documentation
+    url: https://developer.exotel.com/api
+  - type: Documentation
+    url: https://developer.exotel.com/api/sms
+  - type: APIReference
+    url: https://developer.exotel.com/docs/sms-api/api-reference/send-sms
 common:
 - type: AgenticAccess
   url: agentic-access/exotel-agentic-access.yml
