@@ -1,0 +1,22 @@
+{
+  "provider": "exotel",
+  "sources": [
+    "exotel-call-details-api-openapi.yml",
+    "exotel-campaigns-api-openapi.yml",
+    "exotel-numbers-api-openapi.yml",
+    "exotel-sms-api-openapi.yml",
+    "exotel-voice-api-openapi.yml"
+  ],
+  "outputs": [
+    "exotel-call-details-api-openapi.yml",
+    "exotel-campaigns-api-openapi.yml",
+    "exotel-numbers-api-openapi.yml",
+    "exotel-sms-api-openapi.yml",
+    "exotel-voice-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}
