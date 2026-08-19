@@ -1,0 +1,50 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Exotel Call Details Numbers API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Numbers",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get phone-number metadata",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.exotel.com/v1/Accounts/:sid/Numbers/:Number.json",
+            "params": [
+              {
+                "name": "sid",
+                "value": "",
+                "type": "path",
+                "description": "Your Exotel account Sid (Account SID)."
+              },
+              {
+                "name": "Number",
+                "value": "",
+                "type": "path",
+                "description": "The phone number (E.164) to look up."
+              }
+            ]
+          },
+          "docs": "Returns telecom metadata (operator/circle, number type, DND status where available) for an Indian phone number. Confirmed endpoint; response schema modeled."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

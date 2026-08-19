@@ -1,0 +1,259 @@
+{
+  "item": [
+    {
+      "id": "e3e73c4c-0fcb-48e0-9a47-95a10bcf9637",
+      "name": "Numbers",
+      "description": {
+        "content": "Look up telecom metadata for phone numbers.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "5c369e50-0851-4a7b-8863-78f6a1d696aa",
+          "name": "Get phone-number metadata",
+          "request": {
+            "name": "Get phone-number metadata",
+            "description": {
+              "content": "Returns telecom metadata (operator/circle, number type, DND status where available) for an Indian phone number. Confirmed endpoint; response schema modeled.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "Accounts",
+                ":sid",
+                "Numbers",
+                "{{Number}}.json"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "sid",
+                  "description": "(Required) Your Exotel account Sid (Account SID)."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "76c6da31-b5a2-4df3-9e0a-e30a57f93cbb",
+              "name": "Number metadata.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "Accounts",
+                    ":sid",
+                    "Numbers",
+                    "{{Number}}.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "sid",
+                      "description": "(Required) Your Exotel account Sid (Account SID)."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"PhoneNumber\": \"string\",\n  \"Circle\": \"string\",\n  \"CircleName\": \"string\",\n  \"Type\": \"string\",\n  \"Operator\": \"string\",\n  \"OperatorName\": \"string\",\n  \"DND\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e3021a37-a3b0-47d6-ae37-c6af14f87a83",
+              "name": "Missing or invalid API Key/Token.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "Accounts",
+                    ":sid",
+                    "Numbers",
+                    "{{Number}}.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "sid",
+                      "description": "(Required) Your Exotel account Sid (Account SID)."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "59af958b-6748-45f0-8c14-527c701e0e1b",
+              "name": "Resource not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "Accounts",
+                    ":sid",
+                    "Numbers",
+                    "{{Number}}.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "sid",
+                      "description": "(Required) Your Exotel account Sid (Account SID)."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.exotel.com",
+      "key": "baseUrl"
+    },
+    {
+      "disabled": false,
+      "description": {
+        "content": "(Required) The phone number (E.164) to look up.",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "<string>",
+      "key": "Number"
+    }
+  ],
+  "auth": {
+    "type": "basic",
+    "basic": [
+      {
+        "key": "username",
+        "value": "{{basicAuthUsername}}"
+      },
+      {
+        "key": "password",
+        "value": "{{basicAuthPassword}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "d3db82d6-cdba-4529-8bd6-ae392e386fd2",
+    "name": "Exotel Call Details Numbers API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Exotel is an Indian cloud telephony and customer-engagement (CPaaS) platform. This OpenAPI describes a representative, grounded subset of Exotel's documented public REST API: placing outbound voice calls (connect two numbers, or connect a number to a call flow / applet), sending SMS, retrieving call details, looking up phone-number metadata, and managing call campaigns.\n\nBase URL is region-specific and Twilio-style: `https://<subdomain>/v1/Accounts/<account_sid>/...` for the v1 telephony APIs and `https://<subdomain>/v2/accounts/<account_sid>/...` for the v2 Campaigns API. All requests use HTTP Basic authentication with your API Key as the username and API Token as the password (credentials may also be embedded in the URL as `https://<key>:<token>@<subdomain>/...`).\n\nGROUNDING NOTE: Endpoint paths and HTTP methods for Calls/connect, Calls/{CallSid}, Numbers/{Number}, Sms/send, and the v2 Campaigns resource are confirmed from Exotel's developer docs. Request/response SCHEMAS below are MODELED from the documented parameter lists and Exotel's Twilio-style conventions - Exotel does not publish a machine OpenAPI, so field-level schemas should be verified against the live docs before production use. Exotel APIs return XML by default; append `.json` to a resource path to receive JSON (shown here as the JSON variants).\n\nContact Support:\n Name: Exotel Developer Support",
+      "type": "text/plain"
+    }
+  }
+}

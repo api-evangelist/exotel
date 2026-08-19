@@ -1,0 +1,48 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Exotel Call Details Voice API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Voice",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Connect two numbers or connect a number to a call flow",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.exotel.com/v1/Accounts/:sid/Calls/connect.json",
+            "params": [
+              {
+                "name": "sid",
+                "value": "",
+                "type": "path",
+                "description": "Your Exotel account Sid (Account SID)."
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": []
+            }
+          },
+          "docs": "Places an outbound call. In the \"connect two numbers\" mode, Exotel first calls `From`, and when answered connects to `To`. In the \"connect to a flow\" mode, provide `Url` pointing to an Exotel call flow (App/applet, e.g. `http://my.exotel.com/{sid}/exoml/start_voice/{flow_id}`) instead of `To`. Confirmed endpoint; body schema modeled from documented form parameters."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

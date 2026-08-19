@@ -1,0 +1,73 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Exotel Call Details SMS API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "SMS",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Send an SMS",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.exotel.com/v1/Accounts/:sid/Sms/send.json",
+            "params": [
+              {
+                "name": "sid",
+                "value": "",
+                "type": "path",
+                "description": "Your Exotel account Sid (Account SID)."
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": []
+            }
+          },
+          "docs": "Sends a single SMS from an ExoPhone or approved Sender ID. India traffic requires DLT registration IDs. Confirmed endpoint; body schema modeled from documented parameters."
+        },
+        {
+          "info": {
+            "name": "Get SMS details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.exotel.com/v1/Accounts/:sid/Sms/Messages/:SmsSid.json",
+            "params": [
+              {
+                "name": "sid",
+                "value": "",
+                "type": "path",
+                "description": "Your Exotel account Sid (Account SID)."
+              },
+              {
+                "name": "SmsSid",
+                "value": "",
+                "type": "path",
+                "description": "The unique Sid of the SMS message."
+              }
+            ]
+          },
+          "docs": "Retrieves the delivery status and metadata of a sent SMS. MODELED path following Exotel's Twilio-style convention; verify against live docs."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,753 @@
+{
+  "item": [
+    {
+      "id": "9665013a-d3b8-4e54-a7ff-87b77fe19f8e",
+      "name": "SMS",
+      "description": {
+        "content": "Send SMS and retrieve message details.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "3596cb24-8a57-4ea2-8dcf-3c9a0b8527c4",
+          "name": "Send an SMS",
+          "request": {
+            "name": "Send an SMS",
+            "description": {
+              "content": "Sends a single SMS from an ExoPhone or approved Sender ID. India traffic requires DLT registration IDs. Confirmed endpoint; body schema modeled from documented parameters.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "Accounts",
+                ":sid",
+                "Sms",
+                "send.json"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "sid",
+                  "description": "(Required) Your Exotel account Sid (Account SID)."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "disabled": false,
+                  "key": "From",
+                  "value": "<string>",
+                  "description": "(Required) ExoPhone or approved Sender ID."
+                },
+                {
+                  "disabled": false,
+                  "key": "To",
+                  "value": "<string>",
+                  "description": "(Required) Recipient mobile number (E.164 preferred)."
+                },
+                {
+                  "disabled": false,
+                  "key": "Body",
+                  "value": "<string>",
+                  "description": "(Required) Message content (up to 2000 characters)."
+                },
+                {
+                  "disabled": false,
+                  "key": "EncodingType",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "SmsType",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "Priority",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "DltEntityId",
+                  "value": "<string>",
+                  "description": "DLT entity/registration ID (mandatory for India)."
+                },
+                {
+                  "disabled": false,
+                  "key": "DltTemplateId",
+                  "value": "<string>",
+                  "description": "DLT-approved template ID."
+                },
+                {
+                  "disabled": false,
+                  "key": "StatusCallback",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "CustomField",
+                  "value": "<string>"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "a666bfdd-9dd4-46e7-a851-948c6e76efe2",
+              "name": "SMS accepted.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "Accounts",
+                    ":sid",
+                    "Sms",
+                    "send.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "sid",
+                      "description": "(Required) Your Exotel account Sid (Account SID)."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) ExoPhone or approved Sender ID.",
+                        "type": "text/plain"
+                      },
+                      "key": "From",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) Recipient mobile number (E.164 preferred).",
+                        "type": "text/plain"
+                      },
+                      "key": "To",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) Message content (up to 2000 characters).",
+                        "type": "text/plain"
+                      },
+                      "key": "Body",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "EncodingType",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "SmsType",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "Priority",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "DLT entity/registration ID (mandatory for India).",
+                        "type": "text/plain"
+                      },
+                      "key": "DltEntityId",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "DLT-approved template ID.",
+                        "type": "text/plain"
+                      },
+                      "key": "DltTemplateId",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "StatusCallback",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "CustomField",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"Sid\": \"string\",\n  \"AccountSid\": \"string\",\n  \"Status\": \"string\",\n  \"From\": \"string\",\n  \"To\": \"string\",\n  \"Body\": \"string\",\n  \"DateCreated\": \"string\",\n  \"DetailedStatus\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "73178f1e-6cfc-4cbb-96c6-3f30bafdeb05",
+              "name": "Missing or invalid API Key/Token.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "Accounts",
+                    ":sid",
+                    "Sms",
+                    "send.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "sid",
+                      "description": "(Required) Your Exotel account Sid (Account SID)."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) ExoPhone or approved Sender ID.",
+                        "type": "text/plain"
+                      },
+                      "key": "From",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) Recipient mobile number (E.164 preferred).",
+                        "type": "text/plain"
+                      },
+                      "key": "To",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) Message content (up to 2000 characters).",
+                        "type": "text/plain"
+                      },
+                      "key": "Body",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "EncodingType",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "SmsType",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "Priority",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "DLT entity/registration ID (mandatory for India).",
+                        "type": "text/plain"
+                      },
+                      "key": "DltEntityId",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "DLT-approved template ID.",
+                        "type": "text/plain"
+                      },
+                      "key": "DltTemplateId",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "StatusCallback",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "CustomField",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "bfd59747-e5de-4c19-ab69-2abebdd74b45",
+              "name": "Rate limit exceeded (Voice APIs are limited to ~200 calls/minute).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "Accounts",
+                    ":sid",
+                    "Sms",
+                    "send.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "sid",
+                      "description": "(Required) Your Exotel account Sid (Account SID)."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) ExoPhone or approved Sender ID.",
+                        "type": "text/plain"
+                      },
+                      "key": "From",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) Recipient mobile number (E.164 preferred).",
+                        "type": "text/plain"
+                      },
+                      "key": "To",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) Message content (up to 2000 characters).",
+                        "type": "text/plain"
+                      },
+                      "key": "Body",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "EncodingType",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "SmsType",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "Priority",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "DLT entity/registration ID (mandatory for India).",
+                        "type": "text/plain"
+                      },
+                      "key": "DltEntityId",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "DLT-approved template ID.",
+                        "type": "text/plain"
+                      },
+                      "key": "DltTemplateId",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "StatusCallback",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "CustomField",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ecd22f20-756f-4c1b-92d5-b5f7ac519dc7",
+          "name": "Get SMS details",
+          "request": {
+            "name": "Get SMS details",
+            "description": {
+              "content": "Retrieves the delivery status and metadata of a sent SMS. MODELED path following Exotel's Twilio-style convention; verify against live docs.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "Accounts",
+                ":sid",
+                "Sms",
+                "Messages",
+                "{{SmsSid}}.json"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "sid",
+                  "description": "(Required) Your Exotel account Sid (Account SID)."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "3d154973-f8fd-4e9d-9176-52d81f05b5e7",
+              "name": "SMS details.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "Accounts",
+                    ":sid",
+                    "Sms",
+                    "Messages",
+                    "{{SmsSid}}.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "sid",
+                      "description": "(Required) Your Exotel account Sid (Account SID)."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"Sid\": \"string\",\n  \"AccountSid\": \"string\",\n  \"Status\": \"string\",\n  \"From\": \"string\",\n  \"To\": \"string\",\n  \"Body\": \"string\",\n  \"DateCreated\": \"string\",\n  \"DetailedStatus\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "17716be4-7f56-4e85-9da8-401ed299e67d",
+              "name": "Missing or invalid API Key/Token.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "Accounts",
+                    ":sid",
+                    "Sms",
+                    "Messages",
+                    "{{SmsSid}}.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "sid",
+                      "description": "(Required) Your Exotel account Sid (Account SID)."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "12d2fe7e-d700-4fe1-9fa2-c3801d593c24",
+              "name": "Resource not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "Accounts",
+                    ":sid",
+                    "Sms",
+                    "Messages",
+                    "{{SmsSid}}.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "sid",
+                      "description": "(Required) Your Exotel account Sid (Account SID)."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.exotel.com",
+      "key": "baseUrl"
+    },
+    {
+      "disabled": false,
+      "description": {
+        "content": "(Required) The unique Sid of the SMS message.",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "<string>",
+      "key": "SmsSid"
+    }
+  ],
+  "auth": {
+    "type": "basic",
+    "basic": [
+      {
+        "key": "username",
+        "value": "{{basicAuthUsername}}"
+      },
+      {
+        "key": "password",
+        "value": "{{basicAuthPassword}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "f45fab25-e1bb-44cf-80e5-44613790c22c",
+    "name": "Exotel Call Details SMS API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Exotel is an Indian cloud telephony and customer-engagement (CPaaS) platform. This OpenAPI describes a representative, grounded subset of Exotel's documented public REST API: placing outbound voice calls (connect two numbers, or connect a number to a call flow / applet), sending SMS, retrieving call details, looking up phone-number metadata, and managing call campaigns.\n\nBase URL is region-specific and Twilio-style: `https://<subdomain>/v1/Accounts/<account_sid>/...` for the v1 telephony APIs and `https://<subdomain>/v2/accounts/<account_sid>/...` for the v2 Campaigns API. All requests use HTTP Basic authentication with your API Key as the username and API Token as the password (credentials may also be embedded in the URL as `https://<key>:<token>@<subdomain>/...`).\n\nGROUNDING NOTE: Endpoint paths and HTTP methods for Calls/connect, Calls/{CallSid}, Numbers/{Number}, Sms/send, and the v2 Campaigns resource are confirmed from Exotel's developer docs. Request/response SCHEMAS below are MODELED from the documented parameter lists and Exotel's Twilio-style conventions - Exotel does not publish a machine OpenAPI, so field-level schemas should be verified against the live docs before production use. Exotel APIs return XML by default; append `.json` to a resource path to receive JSON (shown here as the JSON variants).\n\nContact Support:\n Name: Exotel Developer Support",
+      "type": "text/plain"
+    }
+  }
+}

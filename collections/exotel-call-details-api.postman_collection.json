@@ -1,0 +1,439 @@
+{
+  "item": [
+    {
+      "id": "42c4367e-bdd2-412a-b0c3-b95d8b3f92ee",
+      "name": "Call Details",
+      "description": {
+        "content": "Retrieve details of past and in-progress calls.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "eb598bbc-0ae9-4876-bd90-a1af422536d1",
+          "name": "Get details of a single call",
+          "request": {
+            "name": "Get details of a single call",
+            "description": {
+              "content": "Retrieves details (status, direction, duration, price, recording URL) for a call by its Sid. Confirmed endpoint; response schema modeled.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "Accounts",
+                ":sid",
+                "Calls",
+                "{{CallSid}}.json"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "sid",
+                  "description": "(Required) Your Exotel account Sid (Account SID)."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "71da59e6-e523-434e-917b-260cd9e15ccc",
+              "name": "Call details.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "Accounts",
+                    ":sid",
+                    "Calls",
+                    "{{CallSid}}.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "sid",
+                      "description": "(Required) Your Exotel account Sid (Account SID)."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"Sid\": \"string\",\n  \"AccountSid\": \"string\",\n  \"Status\": \"failed\",\n  \"From\": \"string\",\n  \"To\": \"string\",\n  \"PhoneNumberSid\": \"string\",\n  \"Direction\": \"string\",\n  \"Duration\": 4685,\n  \"Price\": \"string\",\n  \"RecordingUrl\": \"string\",\n  \"DateCreated\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b8303ae5-cf3e-4024-90da-953a043dbb73",
+              "name": "Missing or invalid API Key/Token.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "Accounts",
+                    ":sid",
+                    "Calls",
+                    "{{CallSid}}.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "sid",
+                      "description": "(Required) Your Exotel account Sid (Account SID)."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "4c9d4aab-bd10-44c8-b860-3870a2f778ed",
+              "name": "Resource not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "Accounts",
+                    ":sid",
+                    "Calls",
+                    "{{CallSid}}.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "sid",
+                      "description": "(Required) Your Exotel account Sid (Account SID)."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "401dcb03-2c90-4a51-b3dd-d6fe883da894",
+          "name": "List / bulk-query calls",
+          "request": {
+            "name": "List / bulk-query calls",
+            "description": {
+              "content": "Lists calls for the account, filterable by date and status. MODELED path - Exotel documents bulk call queries, and this path follows Exotel's Twilio-style convention; verify against live docs.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "Accounts",
+                ":sid",
+                "Calls.json"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "DateCreated",
+                  "value": "<string>",
+                  "description": "Filter by creation date (YYYY-MM-DD)."
+                },
+                {
+                  "disabled": false,
+                  "key": "Status",
+                  "value": "<string>"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "sid",
+                  "description": "(Required) Your Exotel account Sid (Account SID)."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "bdea4dd2-eb64-4342-aceb-85baafef9300",
+              "name": "A page of call records.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "Accounts",
+                    ":sid",
+                    "Calls.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "DateCreated",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "Status",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "sid",
+                      "description": "(Required) Your Exotel account Sid (Account SID)."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"Calls\": [\n    {\n      \"Sid\": \"string\",\n      \"AccountSid\": \"string\",\n      \"Status\": \"no-answer\",\n      \"From\": \"string\",\n      \"To\": \"string\",\n      \"PhoneNumberSid\": \"string\",\n      \"Direction\": \"string\",\n      \"Duration\": 1176,\n      \"Price\": \"string\",\n      \"RecordingUrl\": \"string\",\n      \"DateCreated\": \"string\"\n    },\n    {\n      \"Sid\": \"string\",\n      \"AccountSid\": \"string\",\n      \"Status\": \"busy\",\n      \"From\": \"string\",\n      \"To\": \"string\",\n      \"PhoneNumberSid\": \"string\",\n      \"Direction\": \"string\",\n      \"Duration\": 8278,\n      \"Price\": \"string\",\n      \"RecordingUrl\": \"string\",\n      \"DateCreated\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "539cbb20-08a8-4b27-913d-b6a23cf78b86",
+              "name": "Missing or invalid API Key/Token.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "Accounts",
+                    ":sid",
+                    "Calls.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "DateCreated",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "Status",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "sid",
+                      "description": "(Required) Your Exotel account Sid (Account SID)."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.exotel.com",
+      "key": "baseUrl"
+    },
+    {
+      "disabled": false,
+      "description": {
+        "content": "(Required) The unique Sid of the call to retrieve.",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "<string>",
+      "key": "CallSid"
+    }
+  ],
+  "auth": {
+    "type": "basic",
+    "basic": [
+      {
+        "key": "username",
+        "value": "{{basicAuthUsername}}"
+      },
+      {
+        "key": "password",
+        "value": "{{basicAuthPassword}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "c5ccc01d-4df4-446b-959a-df0a3eaf8621",
+    "name": "Exotel Call Details API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Exotel is an Indian cloud telephony and customer-engagement (CPaaS) platform. This OpenAPI describes a representative, grounded subset of Exotel's documented public REST API: placing outbound voice calls (connect two numbers, or connect a number to a call flow / applet), sending SMS, retrieving call details, looking up phone-number metadata, and managing call campaigns.\n\nBase URL is region-specific and Twilio-style: `https://<subdomain>/v1/Accounts/<account_sid>/...` for the v1 telephony APIs and `https://<subdomain>/v2/accounts/<account_sid>/...` for the v2 Campaigns API. All requests use HTTP Basic authentication with your API Key as the username and API Token as the password (credentials may also be embedded in the URL as `https://<key>:<token>@<subdomain>/...`).\n\nGROUNDING NOTE: Endpoint paths and HTTP methods for Calls/connect, Calls/{CallSid}, Numbers/{Number}, Sms/send, and the v2 Campaigns resource are confirmed from Exotel's developer docs. Request/response SCHEMAS below are MODELED from the documented parameter lists and Exotel's Twilio-style conventions - Exotel does not publish a machine OpenAPI, so field-level schemas should be verified against the live docs before production use. Exotel APIs return XML by default; append `.json` to a resource path to receive JSON (shown here as the JSON variants).\n\nContact Support:\n Name: Exotel Developer Support",
+      "type": "text/plain"
+    }
+  }
+}

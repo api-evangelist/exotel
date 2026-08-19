@@ -1,0 +1,167 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Exotel Call Details Campaigns API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Campaigns",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List campaigns",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.exotel.com/v2/accounts/:sid/campaigns",
+            "params": [
+              {
+                "name": "sid",
+                "value": "",
+                "type": "path",
+                "description": "Your Exotel account Sid (Account SID)."
+              }
+            ]
+          },
+          "docs": "Lists call campaigns for the account. Confirmed v2 resource; schema modeled."
+        },
+        {
+          "info": {
+            "name": "Create a campaign",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.exotel.com/v2/accounts/:sid/campaigns",
+            "params": [
+              {
+                "name": "sid",
+                "value": "",
+                "type": "path",
+                "description": "Your Exotel account Sid (Account SID)."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new outbound call campaign against a list of numbers and a call flow / caller ID. Confirmed endpoint; body schema modeled."
+        },
+        {
+          "info": {
+            "name": "Get a campaign",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.exotel.com/v2/accounts/:sid/campaigns/:campaign_id",
+            "params": [
+              {
+                "name": "sid",
+                "value": "",
+                "type": "path",
+                "description": "Your Exotel account Sid (Account SID)."
+              },
+              {
+                "name": "campaign_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retrieves a single campaign's configuration and status. Confirmed endpoint; schema modeled."
+        },
+        {
+          "info": {
+            "name": "Update / pause / resume a campaign",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.exotel.com/v2/accounts/:sid/campaigns/:campaign_id",
+            "params": [
+              {
+                "name": "sid",
+                "value": "",
+                "type": "path",
+                "description": "Your Exotel account Sid (Account SID)."
+              },
+              {
+                "name": "campaign_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates campaign configuration or state (e.g. pause, resume). Confirmed endpoint; schema modeled."
+        },
+        {
+          "info": {
+            "name": "Delete a campaign",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.exotel.com/v2/accounts/:sid/campaigns/:campaign_id",
+            "params": [
+              {
+                "name": "sid",
+                "value": "",
+                "type": "path",
+                "description": "Your Exotel account Sid (Account SID)."
+              },
+              {
+                "name": "campaign_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Deletes a campaign. Confirmed endpoint."
+        },
+        {
+          "info": {
+            "name": "Get campaign call details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.exotel.com/v2/accounts/:sid/campaigns/:campaign_id/call-details",
+            "params": [
+              {
+                "name": "sid",
+                "value": "",
+                "type": "path",
+                "description": "Your Exotel account Sid (Account SID)."
+              },
+              {
+                "name": "campaign_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retrieves per-call records for a campaign. Confirmed endpoint; schema modeled."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

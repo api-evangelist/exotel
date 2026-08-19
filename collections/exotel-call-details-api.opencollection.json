@@ -1,0 +1,80 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Exotel Call Details API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Call Details",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get details of a single call",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.exotel.com/v1/Accounts/:sid/Calls/:CallSid.json",
+            "params": [
+              {
+                "name": "sid",
+                "value": "",
+                "type": "path",
+                "description": "Your Exotel account Sid (Account SID)."
+              },
+              {
+                "name": "CallSid",
+                "value": "",
+                "type": "path",
+                "description": "The unique Sid of the call to retrieve."
+              }
+            ]
+          },
+          "docs": "Retrieves details (status, direction, duration, price, recording URL) for a call by its Sid. Confirmed endpoint; response schema modeled."
+        },
+        {
+          "info": {
+            "name": "List / bulk-query calls",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.exotel.com/v1/Accounts/:sid/Calls.json",
+            "params": [
+              {
+                "name": "sid",
+                "value": "",
+                "type": "path",
+                "description": "Your Exotel account Sid (Account SID)."
+              },
+              {
+                "name": "DateCreated",
+                "value": "",
+                "type": "query",
+                "description": "Filter by creation date (YYYY-MM-DD)."
+              },
+              {
+                "name": "Status",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Lists calls for the account, filterable by date and status. MODELED path - Exotel documents bulk call queries, and this path follows Exotel's Twilio-style convention; verify against live docs."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

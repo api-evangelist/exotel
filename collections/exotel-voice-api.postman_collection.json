@@ -1,0 +1,660 @@
+{
+  "item": [
+    {
+      "id": "c5e8bef6-90d7-406c-9924-ecb2e440cd6e",
+      "name": "Voice",
+      "description": {
+        "content": "Place and control outbound voice calls.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "ef68316f-fc17-45ca-accd-dc7d1d06d7a1",
+          "name": "Connect two numbers or connect a number to a call flow",
+          "request": {
+            "name": "Connect two numbers or connect a number to a call flow",
+            "description": {
+              "content": "Places an outbound call. In the \"connect two numbers\" mode, Exotel first calls `From`, and when answered connects to `To`. In the \"connect to a flow\" mode, provide `Url` pointing to an Exotel call flow (App/applet, e.g. `http://my.exotel.com/{sid}/exoml/start_voice/{flow_id}`) instead of `To`. Confirmed endpoint; body schema modeled from documented form parameters.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "Accounts",
+                ":sid",
+                "Calls",
+                "connect.json"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "sid",
+                  "description": "(Required) Your Exotel account Sid (Account SID)."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "disabled": false,
+                  "key": "From",
+                  "value": "<string>",
+                  "description": "(Required) The number Exotel calls first (E.164 preferred)."
+                },
+                {
+                  "disabled": false,
+                  "key": "CallerId",
+                  "value": "<string>",
+                  "description": "(Required) Your ExoPhone / virtual number shown as caller ID."
+                },
+                {
+                  "disabled": false,
+                  "key": "To",
+                  "value": "<string>",
+                  "description": "The number to connect to. Use this OR Url."
+                },
+                {
+                  "disabled": false,
+                  "key": "Url",
+                  "value": "<string>",
+                  "description": "An Exotel call-flow URL to connect the call to instead of a second number, e.g. http://my.exotel.com/{sid}/exoml/start_voice/{flow_id}."
+                },
+                {
+                  "disabled": false,
+                  "key": "CallType",
+                  "value": "<string>",
+                  "description": "Call type classification."
+                },
+                {
+                  "disabled": false,
+                  "key": "TimeLimit",
+                  "value": "<integer>",
+                  "description": "Max call duration in seconds (up to 14400)."
+                },
+                {
+                  "disabled": false,
+                  "key": "TimeOut",
+                  "value": "<integer>",
+                  "description": "Ring timeout in seconds."
+                },
+                {
+                  "disabled": false,
+                  "key": "WaitUrl",
+                  "value": "<string>",
+                  "description": "Audio URL to play while the callee is being connected."
+                },
+                {
+                  "disabled": false,
+                  "key": "Record",
+                  "value": "<boolean>",
+                  "description": "Whether to record the call."
+                },
+                {
+                  "disabled": false,
+                  "key": "StatusCallback",
+                  "value": "<string>",
+                  "description": "Webhook URL called on call state changes."
+                },
+                {
+                  "disabled": false,
+                  "key": "StatusCallbackEvents",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "StatusCallbackEvents",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "CustomField",
+                  "value": "<string>"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "0c44cdcf-bc4e-41c1-8143-60484a2d13a0",
+              "name": "Call queued/initiated.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "Accounts",
+                    ":sid",
+                    "Calls",
+                    "connect.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "sid",
+                      "description": "(Required) Your Exotel account Sid (Account SID)."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) The number Exotel calls first (E.164 preferred).",
+                        "type": "text/plain"
+                      },
+                      "key": "From",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) Your ExoPhone / virtual number shown as caller ID.",
+                        "type": "text/plain"
+                      },
+                      "key": "CallerId",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "The number to connect to. Use this OR Url.",
+                        "type": "text/plain"
+                      },
+                      "key": "To",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "An Exotel call-flow URL to connect the call to instead of a second number, e.g. http://my.exotel.com/{sid}/exoml/start_voice/{flow_id}.",
+                        "type": "text/plain"
+                      },
+                      "key": "Url",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Call type classification.",
+                        "type": "text/plain"
+                      },
+                      "key": "CallType",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Max call duration in seconds (up to 14400).",
+                        "type": "text/plain"
+                      },
+                      "key": "TimeLimit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Ring timeout in seconds.",
+                        "type": "text/plain"
+                      },
+                      "key": "TimeOut",
+                      "value": "<integer>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Audio URL to play while the callee is being connected.",
+                        "type": "text/plain"
+                      },
+                      "key": "WaitUrl",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Whether to record the call.",
+                        "type": "text/plain"
+                      },
+                      "key": "Record",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Webhook URL called on call state changes.",
+                        "type": "text/plain"
+                      },
+                      "key": "StatusCallback",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "StatusCallbackEvents",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "StatusCallbackEvents",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "CustomField",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"Sid\": \"string\",\n  \"AccountSid\": \"string\",\n  \"Status\": \"completed\",\n  \"From\": \"string\",\n  \"To\": \"string\",\n  \"PhoneNumberSid\": \"string\",\n  \"Direction\": \"string\",\n  \"Duration\": 8113,\n  \"Price\": \"string\",\n  \"RecordingUrl\": \"string\",\n  \"DateCreated\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cfc393f8-e0e0-4c73-b9e0-f115cdf95a60",
+              "name": "Missing or invalid API Key/Token.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "Accounts",
+                    ":sid",
+                    "Calls",
+                    "connect.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "sid",
+                      "description": "(Required) Your Exotel account Sid (Account SID)."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) The number Exotel calls first (E.164 preferred).",
+                        "type": "text/plain"
+                      },
+                      "key": "From",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) Your ExoPhone / virtual number shown as caller ID.",
+                        "type": "text/plain"
+                      },
+                      "key": "CallerId",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "The number to connect to. Use this OR Url.",
+                        "type": "text/plain"
+                      },
+                      "key": "To",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "An Exotel call-flow URL to connect the call to instead of a second number, e.g. http://my.exotel.com/{sid}/exoml/start_voice/{flow_id}.",
+                        "type": "text/plain"
+                      },
+                      "key": "Url",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Call type classification.",
+                        "type": "text/plain"
+                      },
+                      "key": "CallType",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Max call duration in seconds (up to 14400).",
+                        "type": "text/plain"
+                      },
+                      "key": "TimeLimit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Ring timeout in seconds.",
+                        "type": "text/plain"
+                      },
+                      "key": "TimeOut",
+                      "value": "<integer>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Audio URL to play while the callee is being connected.",
+                        "type": "text/plain"
+                      },
+                      "key": "WaitUrl",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Whether to record the call.",
+                        "type": "text/plain"
+                      },
+                      "key": "Record",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Webhook URL called on call state changes.",
+                        "type": "text/plain"
+                      },
+                      "key": "StatusCallback",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "StatusCallbackEvents",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "StatusCallbackEvents",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "CustomField",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "33254415-719a-4eec-9489-64354a01cf49",
+              "name": "Rate limit exceeded (Voice APIs are limited to ~200 calls/minute).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "Accounts",
+                    ":sid",
+                    "Calls",
+                    "connect.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "sid",
+                      "description": "(Required) Your Exotel account Sid (Account SID)."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) The number Exotel calls first (E.164 preferred).",
+                        "type": "text/plain"
+                      },
+                      "key": "From",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) Your ExoPhone / virtual number shown as caller ID.",
+                        "type": "text/plain"
+                      },
+                      "key": "CallerId",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "The number to connect to. Use this OR Url.",
+                        "type": "text/plain"
+                      },
+                      "key": "To",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "An Exotel call-flow URL to connect the call to instead of a second number, e.g. http://my.exotel.com/{sid}/exoml/start_voice/{flow_id}.",
+                        "type": "text/plain"
+                      },
+                      "key": "Url",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Call type classification.",
+                        "type": "text/plain"
+                      },
+                      "key": "CallType",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Max call duration in seconds (up to 14400).",
+                        "type": "text/plain"
+                      },
+                      "key": "TimeLimit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Ring timeout in seconds.",
+                        "type": "text/plain"
+                      },
+                      "key": "TimeOut",
+                      "value": "<integer>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Audio URL to play while the callee is being connected.",
+                        "type": "text/plain"
+                      },
+                      "key": "WaitUrl",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Whether to record the call.",
+                        "type": "text/plain"
+                      },
+                      "key": "Record",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Webhook URL called on call state changes.",
+                        "type": "text/plain"
+                      },
+                      "key": "StatusCallback",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "StatusCallbackEvents",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "StatusCallbackEvents",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "CustomField",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.exotel.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "basic",
+    "basic": [
+      {
+        "key": "username",
+        "value": "{{basicAuthUsername}}"
+      },
+      {
+        "key": "password",
+        "value": "{{basicAuthPassword}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "4188ead0-b9f9-4239-87eb-cd3be9349c90",
+    "name": "Exotel Call Details Voice API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Exotel is an Indian cloud telephony and customer-engagement (CPaaS) platform. This OpenAPI describes a representative, grounded subset of Exotel's documented public REST API: placing outbound voice calls (connect two numbers, or connect a number to a call flow / applet), sending SMS, retrieving call details, looking up phone-number metadata, and managing call campaigns.\n\nBase URL is region-specific and Twilio-style: `https://<subdomain>/v1/Accounts/<account_sid>/...` for the v1 telephony APIs and `https://<subdomain>/v2/accounts/<account_sid>/...` for the v2 Campaigns API. All requests use HTTP Basic authentication with your API Key as the username and API Token as the password (credentials may also be embedded in the URL as `https://<key>:<token>@<subdomain>/...`).\n\nGROUNDING NOTE: Endpoint paths and HTTP methods for Calls/connect, Calls/{CallSid}, Numbers/{Number}, Sms/send, and the v2 Campaigns resource are confirmed from Exotel's developer docs. Request/response SCHEMAS below are MODELED from the documented parameter lists and Exotel's Twilio-style conventions - Exotel does not publish a machine OpenAPI, so field-level schemas should be verified against the live docs before production use. Exotel APIs return XML by default; append `.json` to a resource path to receive JSON (shown here as the JSON variants).\n\nContact Support:\n Name: Exotel Developer Support",
+      "type": "text/plain"
+    }
+  }
+}
