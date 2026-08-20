@@ -45,6 +45,11 @@ apis:
   - WebSocket
   - Voice Streaming
   - Voicebot
+  - Real-Time
+  tags_raw:
+  - WebSocket
+  - Voice Streaming
+  - Voicebot
   - Real Time
   image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
   humanURL: https://developer.exotel.com/docs/agentstream/developer-guide
