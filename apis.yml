@@ -10,6 +10,18 @@ description: Exotel is an Indian cloud telephony and customer-engagement (CPaaS)
   subdomains (api.exotel.com for Singapore, api.in.exotel.com for Mumbai/India) using
   HTTP Basic auth with an API Key and API Token. Exotel AgentStream adds a documented
   WebSocket voice-streaming API for real-time voicebots.
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: true
+  label: Hosted service · you call their endpoint
+  confidence: high
+  source:
+  - openapi
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: freemium
   onboarding: self-serve
