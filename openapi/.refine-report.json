@@ -1,11 +1,7 @@
 {
   "provider": "exotel",
   "sources": [
-    "exotel-call-details-api-openapi.yml",
-    "exotel-campaigns-api-openapi.yml",
-    "exotel-numbers-api-openapi.yml",
-    "exotel-sms-api-openapi.yml",
-    "exotel-voice-api-openapi.yml"
+    "_original/exotel-openapi.yml"
   ],
   "outputs": [
     "exotel-call-details-api-openapi.yml",
@@ -17,6 +13,16 @@
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "exotel-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "exotel-call-details-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "exotel-campaigns-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "exotel-numbers-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "exotel-sms-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "exotel-voice-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }
