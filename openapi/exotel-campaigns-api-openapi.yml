@@ -162,32 +162,7 @@ paths:
         '401':
           $ref: '#/components/responses/Unauthorized'
 components:
-  responses:
-    NotFound:
-      description: Resource not found.
-    Unauthorized:
-      description: Missing or invalid API Key/Token.
   schemas:
-    CampaignInput:
-      type: object
-      properties:
-        name:
-          type: string
-        caller_id:
-          type: string
-        lists:
-          type: array
-          items:
-            type: string
-          description: List IDs of contacts to dial.
-        campaign_type:
-          type: string
-        url:
-          type: string
-          description: Call-flow URL to run for each connected call.
-        schedule:
-          type: object
-          additionalProperties: true
     CallResponse:
       type: object
       properties:
@@ -221,6 +196,26 @@ components:
           type: string
         DateCreated:
           type: string
+    CampaignInput:
+      type: object
+      properties:
+        name:
+          type: string
+        caller_id:
+          type: string
+        lists:
+          type: array
+          items:
+            type: string
+          description: List IDs of contacts to dial.
+        campaign_type:
+          type: string
+        url:
+          type: string
+          description: Call-flow URL to run for each connected call.
+        schedule:
+          type: object
+          additionalProperties: true
     Campaign:
       type: object
       properties:
@@ -244,6 +239,11 @@ components:
       description: Your Exotel account Sid (Account SID).
       schema:
         type: string
+  responses:
+    NotFound:
+      description: Resource not found.
+    Unauthorized:
+      description: Missing or invalid API Key/Token.
   securitySchemes:
     basicAuth:
       type: http
