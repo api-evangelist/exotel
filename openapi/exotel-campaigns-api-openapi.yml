@@ -196,6 +196,21 @@ components:
           type: string
         DateCreated:
           type: string
+    Campaign:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        status:
+          type: string
+        caller_id:
+          type: string
+        type:
+          type: string
+        created_at:
+          type: string
     CampaignInput:
       type: object
       properties:
@@ -216,21 +231,11 @@ components:
         schedule:
           type: object
           additionalProperties: true
-    Campaign:
-      type: object
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        status:
-          type: string
-        caller_id:
-          type: string
-        type:
-          type: string
-        created_at:
-          type: string
+  responses:
+    NotFound:
+      description: Resource not found.
+    Unauthorized:
+      description: Missing or invalid API Key/Token.
   parameters:
     AccountSid:
       name: sid
@@ -239,11 +244,6 @@ components:
       description: Your Exotel account Sid (Account SID).
       schema:
         type: string
-  responses:
-    NotFound:
-      description: Resource not found.
-    Unauthorized:
-      description: Missing or invalid API Key/Token.
   securitySchemes:
     basicAuth:
       type: http

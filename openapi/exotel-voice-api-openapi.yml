@@ -57,15 +57,45 @@ paths:
         '429':
           $ref: '#/components/responses/TooManyRequests'
 components:
-  parameters:
-    AccountSid:
-      name: sid
-      in: path
-      required: true
-      description: Your Exotel account Sid (Account SID).
-      schema:
-        type: string
+  responses:
+    TooManyRequests:
+      description: Rate limit exceeded (Voice APIs are limited to ~200 calls/minute).
+    Unauthorized:
+      description: Missing or invalid API Key/Token.
   schemas:
+    CallResponse:
+      type: object
+      properties:
+        Sid:
+          type: string
+        AccountSid:
+          type: string
+        Status:
+          type: string
+          enum:
+          - queued
+          - in-progress
+          - completed
+          - failed
+          - busy
+          - no-answer
+        From:
+          type: string
+        To:
+          type: string
+        PhoneNumberSid:
+          type: string
+          description: The ExoPhone / virtual number used.
+        Direction:
+          type: string
+        Duration:
+          type: integer
+        Price:
+          type: string
+        RecordingUrl:
+          type: string
+        DateCreated:
+          type: string
     ConnectCallRequest:
       type: object
       required:
@@ -114,44 +144,14 @@ components:
             - answered
         CustomField:
           type: string
-    CallResponse:
-      type: object
-      properties:
-        Sid:
-          type: string
-        AccountSid:
-          type: string
-        Status:
-          type: string
-          enum:
-          - queued
-          - in-progress
-          - completed
-          - failed
-          - busy
-          - no-answer
-        From:
-          type: string
-        To:
-          type: string
-        PhoneNumberSid:
-          type: string
-          description: The ExoPhone / virtual number used.
-        Direction:
-          type: string
-        Duration:
-          type: integer
-        Price:
-          type: string
-        RecordingUrl:
-          type: string
-        DateCreated:
-          type: string
-  responses:
-    Unauthorized:
-      description: Missing or invalid API Key/Token.
-    TooManyRequests:
-      description: Rate limit exceeded (Voice APIs are limited to ~200 calls/minute).
+  parameters:
+    AccountSid:
+      name: sid
+      in: path
+      required: true
+      description: Your Exotel account Sid (Account SID).
+      schema:
+        type: string
   securitySchemes:
     basicAuth:
       type: http

@@ -83,34 +83,7 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
-  parameters:
-    AccountSid:
-      name: sid
-      in: path
-      required: true
-      description: Your Exotel account Sid (Account SID).
-      schema:
-        type: string
   schemas:
-    SmsResponse:
-      type: object
-      properties:
-        Sid:
-          type: string
-        AccountSid:
-          type: string
-        Status:
-          type: string
-        From:
-          type: string
-        To:
-          type: string
-        Body:
-          type: string
-        DateCreated:
-          type: string
-        DetailedStatus:
-          type: string
     SendSmsRequest:
       type: object
       required:
@@ -153,13 +126,40 @@ components:
           type: string
         CustomField:
           type: string
+    SmsResponse:
+      type: object
+      properties:
+        Sid:
+          type: string
+        AccountSid:
+          type: string
+        Status:
+          type: string
+        From:
+          type: string
+        To:
+          type: string
+        Body:
+          type: string
+        DateCreated:
+          type: string
+        DetailedStatus:
+          type: string
   responses:
+    TooManyRequests:
+      description: Rate limit exceeded (Voice APIs are limited to ~200 calls/minute).
     NotFound:
       description: Resource not found.
     Unauthorized:
       description: Missing or invalid API Key/Token.
-    TooManyRequests:
-      description: Rate limit exceeded (Voice APIs are limited to ~200 calls/minute).
+  parameters:
+    AccountSid:
+      name: sid
+      in: path
+      required: true
+      description: Your Exotel account Sid (Account SID).
+      schema:
+        type: string
   securitySchemes:
     basicAuth:
       type: http

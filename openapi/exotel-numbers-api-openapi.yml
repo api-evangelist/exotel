@@ -57,11 +57,6 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
-  responses:
-    NotFound:
-      description: Resource not found.
-    Unauthorized:
-      description: Missing or invalid API Key/Token.
   schemas:
     NumberMetadata:
       type: object
@@ -84,6 +79,11 @@ components:
         DND:
           type: string
           description: Do-Not-Disturb registration status where available.
+  responses:
+    NotFound:
+      description: Resource not found.
+    Unauthorized:
+      description: Missing or invalid API Key/Token.
   parameters:
     AccountSid:
       name: sid
