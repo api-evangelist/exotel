@@ -148,10 +148,10 @@ components:
   responses:
     TooManyRequests:
       description: Rate limit exceeded (Voice APIs are limited to ~200 calls/minute).
-    NotFound:
-      description: Resource not found.
     Unauthorized:
       description: Missing or invalid API Key/Token.
+    NotFound:
+      description: Resource not found.
   parameters:
     AccountSid:
       name: sid

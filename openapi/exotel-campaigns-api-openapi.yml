@@ -163,39 +163,6 @@ paths:
           $ref: '#/components/responses/Unauthorized'
 components:
   schemas:
-    CallResponse:
-      type: object
-      properties:
-        Sid:
-          type: string
-        AccountSid:
-          type: string
-        Status:
-          type: string
-          enum:
-          - queued
-          - in-progress
-          - completed
-          - failed
-          - busy
-          - no-answer
-        From:
-          type: string
-        To:
-          type: string
-        PhoneNumberSid:
-          type: string
-          description: The ExoPhone / virtual number used.
-        Direction:
-          type: string
-        Duration:
-          type: integer
-        Price:
-          type: string
-        RecordingUrl:
-          type: string
-        DateCreated:
-          type: string
     Campaign:
       type: object
       properties:
@@ -231,11 +198,44 @@ components:
         schedule:
           type: object
           additionalProperties: true
+    CallResponse:
+      type: object
+      properties:
+        Sid:
+          type: string
+        AccountSid:
+          type: string
+        Status:
+          type: string
+          enum:
+          - queued
+          - in-progress
+          - completed
+          - failed
+          - busy
+          - no-answer
+        From:
+          type: string
+        To:
+          type: string
+        PhoneNumberSid:
+          type: string
+          description: The ExoPhone / virtual number used.
+        Direction:
+          type: string
+        Duration:
+          type: integer
+        Price:
+          type: string
+        RecordingUrl:
+          type: string
+        DateCreated:
+          type: string
   responses:
-    NotFound:
-      description: Resource not found.
     Unauthorized:
       description: Missing or invalid API Key/Token.
+    NotFound:
+      description: Resource not found.
   parameters:
     AccountSid:
       name: sid

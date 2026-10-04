@@ -99,6 +99,11 @@ paths:
         '401':
           $ref: '#/components/responses/Unauthorized'
 components:
+  responses:
+    NotFound:
+      description: Resource not found.
+    Unauthorized:
+      description: Missing or invalid API Key/Token.
   schemas:
     CallResponse:
       type: object
@@ -133,11 +138,6 @@ components:
           type: string
         DateCreated:
           type: string
-  responses:
-    NotFound:
-      description: Resource not found.
-    Unauthorized:
-      description: Missing or invalid API Key/Token.
   parameters:
     AccountSid:
       name: sid
