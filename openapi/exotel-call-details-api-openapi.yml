@@ -99,6 +99,14 @@ paths:
         '401':
           $ref: '#/components/responses/Unauthorized'
 components:
+  parameters:
+    AccountSid:
+      name: sid
+      in: path
+      required: true
+      description: Your Exotel account Sid (Account SID).
+      schema:
+        type: string
   responses:
     NotFound:
       description: Resource not found.
@@ -138,14 +146,6 @@ components:
           type: string
         DateCreated:
           type: string
-  parameters:
-    AccountSid:
-      name: sid
-      in: path
-      required: true
-      description: Your Exotel account Sid (Account SID).
-      schema:
-        type: string
   securitySchemes:
     basicAuth:
       type: http

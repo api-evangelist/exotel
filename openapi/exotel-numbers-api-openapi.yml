@@ -57,11 +57,6 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
-  responses:
-    NotFound:
-      description: Resource not found.
-    Unauthorized:
-      description: Missing or invalid API Key/Token.
   parameters:
     AccountSid:
       name: sid
@@ -70,6 +65,11 @@ components:
       description: Your Exotel account Sid (Account SID).
       schema:
         type: string
+  responses:
+    NotFound:
+      description: Resource not found.
+    Unauthorized:
+      description: Missing or invalid API Key/Token.
   schemas:
     NumberMetadata:
       type: object
