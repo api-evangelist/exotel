@@ -42,3 +42,15 @@
     builder: provider (package published from the provider's own domain)
   status: not-a-workflow
   arazzo: null
+- slug: exotel-freshworks-own
+  label: Freshworks (own)
+  partner: freshworks
+  partner_name: Freshworks (own)
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  evidence: https://www.freshworks.com/apps/exotel_cti_v2
+  source: edge
+  relationship: platform-app
+  status: not-a-workflow
+  arazzo: null

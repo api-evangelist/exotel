@@ -1,6 +1,7 @@
 generated: '2026-10-13'
 method: searched
 checked:
+- freshworks/integrations/freshworks-integration-edges.yml
 - https://azuremarketplace.microsoft.com/
 - https://registry.npmjs.org/-/v1/search?text=keywords:n8n-community-node-package
 marketplace_apps: []
@@ -51,5 +52,23 @@ edges:
     builder: provider (package published from the provider's own domain)
   detected_by: sweep-workflow-automation.py
   first_seen: '2026-10-15'
+- partner_name: Freshworks (own)
+  partner: freshworks
+  partner_match: mirror
+  mirror_match: domain
+  type: marketplace
+  relationship: platform-app
+  direction: third-party
+  channel: partner-built
+  marketplace: own
+  evidence: https://www.freshworks.com/apps/exotel_cti_v2
+  mirror_of: freshworks/integrations/freshworks-integration-edges.yml
+  apps:
+  - Exotel CTI V2
+  listing_count: 1
+  detected: '2026-10-19'
+  detected_by: mirror-platform-listings.py
+  publisher_verified:
+  - Verified by Freshworks
 source:
 - https://registry.npmjs.org/-/v1/search?text=keywords:n8n-community-node-package
