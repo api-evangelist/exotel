@@ -54,3 +54,28 @@
   relationship: platform-app
   status: not-a-workflow
   arazzo: null
+- slug: exotel-n8n-n8n-community
+  label: n8n (n8n-community)
+  partner: n8n
+  partner_name: n8n (n8n-community)
+  type: marketplace
+  marketplace: n8n-community
+  channel: partner-built
+  evidence: https://www.npmjs.com/package/n8n-nodes-exotel
+  source: edge
+  relationship: platform-app
+  status: not-a-workflow
+  arazzo: null
+- slug: exotel-hubspot-own
+  label: HubSpot (own)
+  partner: hubspot
+  partner_name: HubSpot (own)
+  category: CALLING
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  evidence: https://ecosystem.hubspot.com/marketplace/listing/exotel
+  source: edge
+  relationship: platform-app
+  status: not-a-workflow
+  arazzo: null

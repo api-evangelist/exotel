@@ -4,6 +4,8 @@ checked:
 - freshworks/integrations/freshworks-integration-edges.yml
 - https://azuremarketplace.microsoft.com/
 - https://registry.npmjs.org/-/v1/search?text=keywords:n8n-community-node-package
+- n8n/integrations/n8n-integration-edges.yml
+- hubspot/integrations/hubspot-integration-edges.yml
 marketplace_apps: []
 edges:
 - partner_name: Microsoft Azure Marketplace
@@ -70,5 +72,37 @@ edges:
   detected_by: mirror-platform-listings.py
   publisher_verified:
   - Verified by Freshworks
+- partner_name: n8n (n8n-community)
+  partner: n8n
+  partner_match: mirror
+  mirror_match: domain
+  type: marketplace
+  relationship: platform-app
+  direction: third-party
+  channel: partner-built
+  marketplace: n8n-community
+  evidence: https://www.npmjs.com/package/n8n-nodes-exotel
+  mirror_of: n8n/integrations/n8n-integration-edges.yml
+  apps: []
+  listing_count: 1
+  detected: '2026-10-19'
+  detected_by: mirror-platform-listings.py
+- partner_name: HubSpot (own)
+  partner: hubspot
+  partner_match: mirror
+  mirror_match: domain
+  type: marketplace
+  relationship: platform-app
+  direction: third-party
+  channel: partner-built
+  marketplace: own
+  evidence: https://ecosystem.hubspot.com/marketplace/listing/exotel
+  mirror_of: hubspot/integrations/hubspot-integration-edges.yml
+  apps:
+  - Exotel
+  listing_count: 1
+  detected: '2026-10-21'
+  detected_by: mirror-platform-listings.py
+  category: CALLING
 source:
 - https://registry.npmjs.org/-/v1/search?text=keywords:n8n-community-node-package
