@@ -1,4 +1,4 @@
-# Exotel (exotel)
+# Exotel
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -64,177 +64,144 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Exotel is an Indian cloud telephony and customer-engagement (CPaaS) platform offering programmable voice, SMS, virtual numbers (ExoPhones), IVR/call flows, call campaigns, and call-center tooling. Its Twilio-style REST APIs place outbound calls, send SMS, return call and number metadata, and manage campaigns. Exotel AgentStream adds a documented WebSocket voice-streaming API for real-time voicebots.
+Exotel is an Indian cloud telephony and customer-engagement (CPaaS) platform offering programmable voice, SMS, virtual numbers (ExoPhones), IVR/call flows, call campaigns, and call-center tooling. Its Twilio-style REST APIs place outbound calls (connect two numbers or connect a number to a call flow), send SMS, return call and number metadata, and manage campaigns, over region-specific subdomains (api.exotel.com for Singapore, api.in.exotel.com for Mumbai/India) using HTTP Basic auth with an API Key and API Token. Exotel AgentStream adds a documented WebSocket voice-streaming API for real-time voicebots.
 
-**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/exotel/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/exotel/refs/heads/main/apis.yml)
+**Areas:** Cloud Telephony · Voice · SMS · India · CPaaS · Call Center · IVR · Numbers · Communications · Customer Engagement · Real-Time
 
-## Access Model (Read This First)
+## Exotel on APIs.io
 
-- **Authentication:** HTTP Basic. Your **API Key** is the username and your **API Token** is the password. Both, along with your **Account SID**, come from the Exotel Dashboard → Settings → API Settings. Credentials can be passed via the `Authorization: Basic base64(key:token)` header (recommended) or embedded in the URL as `https://<api_key>:<api_token>@<subdomain>/...`.
-- **Account SID:** Appears in every path: `/v1/Accounts/<account_sid>/...` (and `/v2/accounts/<account_sid>/...` for Campaigns).
-- **Region subdomains:** `api.exotel.com` (Singapore cluster, default) and `api.in.exotel.com` (Mumbai / India cluster). Use the subdomain that matches where your account is provisioned.
-- **Response format:** Exotel APIs return **XML by default**. Append `.json` to a resource path to receive JSON.
-- **India regulatory:** SMS to Indian numbers requires **DLT** registration (`DltEntityId`, and typically a `DltTemplateId`).
-- **AgentStream WebSocket direction:** For real-time voice streaming, **Exotel is the WebSocket client** — it connects out to a `wss://` endpoint that **you** host and configure on a Voicebot/Stream applet. There is no fixed Exotel-hosted `wss://` URL to dial.
+Everything profiled for Exotel is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/exotel/](https://apis.io/providers/exotel/)** — or go straight to one of the APIs or properties below.
 
-## Real vs Modeled
+### APIs (6)
 
-Endpoint **paths and methods** for `Calls/connect`, `Calls/{CallSid}`, `Numbers/{Number}`, `Sms/send`, and the v2 `campaigns` resource are **confirmed** from Exotel's developer docs. The bulk `Calls` list and `Sms/Messages/{SmsSid}` details paths are **modeled** on Exotel's Twilio-style conventions (documented as supported; verify exact paths). Request/response **field schemas** in the OpenAPI are modeled from documented parameter lists — Exotel does not publish a machine-readable OpenAPI. The AgentStream AsyncAPI message shapes are grounded in the documented example JSON messages.
+- [Exotel AgentStream Voice Streaming API](https://apis.io/apis/exotel/exotel-agentstream-voice-streaming-api/) — Documented WebSocket (wss://) voice-streaming API. When a call reaches a Voicebot or Stream applet, Exotel opens a secure WebSocket to your endpoint and…
+- [Exotel Call Details API](https://apis.io/apis/exotel/exotel-call-details-api/) — Retrieve details of past and in-progress calls.
+- [Exotel Campaigns API](https://apis.io/apis/exotel/exotel-campaigns-api/) — Create and manage bulk outbound call campaigns (v2).
+- [Exotel Numbers API](https://apis.io/apis/exotel/exotel-numbers-api/) — Look up telecom metadata for phone numbers.
+- [Exotel SMS API](https://apis.io/apis/exotel/exotel-sms-api/) — Send SMS and retrieve message details.
+- [Exotel Voice API](https://apis.io/apis/exotel/exotel-voice-api/) — Place and control outbound voice calls.
 
-## Tags
+### Published properties
 
-- Cloud Telephony
-- Voice
-- SMS
-- India
-- CPaaS
-- Call Center
-- IVR
-- Numbers
-- Communications
-- Customer Engagement
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-## Timestamps
+#### AsyncAPI (1)
 
-- **Created:** 2026-07-12
-- **Modified:** 2026-07-12
+Event-driven and webhook contracts.
 
-## APIs
+- [Exotel AgentStream Voice Streaming API](https://apis.io/asyncapis/exotel/exotel-asyncapi/)
 
-### Exotel Voice Call API
+#### Event channels (1)
 
-Place outbound voice calls via `POST /v1/Accounts/{sid}/Calls/connect` — connect two phone numbers (call `From`, then bridge to `To`) or connect a number to an Exotel call flow / applet via the `Url` parameter. Supports recording, time limits, wait audio, and status callbacks.
+Individual events and webhooks the provider emits.
 
-- **Human URL:** [https://developer.exotel.com/api/make-a-call-api](https://developer.exotel.com/api/make-a-call-api)
-- **Base URL:** `https://api.exotel.com/v1/Accounts`
+- [/](https://apis.io/channels/exotel/untitled/)
 
-#### Tags
+#### Agentic access (1)
 
-- Voice
-- Calls
-- IVR
+Which operations an agent can call, which act, and which need a human in the loop.
 
-#### Properties
+- [Exotel Agentic Access](https://apis.io/agentic-access/exotel/exotel-agentic-access/)
 
-- [Documentation](https://developer.exotel.com/api/make-a-call-api)
-- [API Reference](https://developer.exotel.com/api/make-a-call-api)
-- [OpenAPI](openapi/exotel-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/exotel.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/exotel.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+#### Collections (6)
 
-### Exotel Call Details API
+Postman and Open Collection request collections.
 
-Retrieve details of a single call by Sid (`GET /v1/Accounts/{sid}/Calls/{CallSid}`) including status, direction, duration, price, and recording URL, plus bulk call queries filterable by date and status.
+- [Exotel API](https://apis.io/collections/exotel/open-exotel/)
+- [Exotel Call Details API](https://apis.io/collections/exotel/open-exotel-call-details-api/)
+- [Exotel Call Details Campaigns API](https://apis.io/collections/exotel/open-exotel-campaigns-api/)
+- [Exotel Call Details Numbers API](https://apis.io/collections/exotel/open-exotel-numbers-api/)
+- [Exotel Call Details SMS API](https://apis.io/collections/exotel/open-exotel-sms-api/)
+- [Exotel Call Details Voice API](https://apis.io/collections/exotel/open-exotel-voice-api/)
 
-- **Human URL:** [https://developer.exotel.com/api](https://developer.exotel.com/api)
-- **Base URL:** `https://api.exotel.com/v1/Accounts`
+#### Governance rules (1)
 
-#### Tags
+Spectral rulesets for the provider's contracts.
 
-- Calls
-- Call Details
-- Reporting
+- [Exotel — asyncapi rules](https://apis.io/rules/exotel/exotel-asyncapi-spectral-rules/)
 
-#### Properties
+#### Security (2)
 
-- [Documentation](https://developer.exotel.com/api)
-- [OpenAPI](openapi/exotel-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/exotel.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/exotel.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+Authentication, trust centre, and vulnerability disclosure.
 
-### Exotel SMS API
+- [Exotel Authentication](https://apis.io/security/exotel/exotel-authentication/)
+- [Exotel Domain Security](https://apis.io/security/exotel/exotel-domain-security/)
 
-Send single SMS from an ExoPhone or approved Sender ID via `POST /v1/Accounts/{sid}/Sms/send`, with India DLT entity/template support, encoding and priority options, delivery status callbacks, and message-detail lookup.
+#### Plans and pricing (1)
 
-- **Human URL:** [https://developer.exotel.com/api/sms](https://developer.exotel.com/api/sms)
-- **Base URL:** `https://api.exotel.com/v1/Accounts`
+Published plans, tiers and prices.
 
-#### Tags
+- [Exotel Plans Pricing](https://apis.io/plans/exotel/exotel-plans-pricing/)
 
-- SMS
-- Messaging
-- DLT
+#### Rate limits (1)
 
-#### Properties
+Published request limits.
 
-- [Documentation](https://developer.exotel.com/api/sms)
-- [API Reference](https://developer.exotel.com/docs/sms-api/api-reference/send-sms)
-- [OpenAPI](openapi/exotel-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/exotel.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/exotel.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+- [Exotel Rate Limits](https://apis.io/rate-limits/exotel/exotel-rate-limits/)
 
-### Exotel Numbers API
+#### FinOps (1)
 
-Look up telecom metadata for a phone number via `GET /v1/Accounts/{sid}/Numbers/{Number}` — operator/circle, number type, and DND status where available for Indian numbers.
+What the API costs to run, by operation.
 
-- **Human URL:** [https://developer.exotel.com/api](https://developer.exotel.com/api)
-- **Base URL:** `https://api.exotel.com/v1/Accounts`
+- [Exotel Finops](https://apis.io/finops/exotel/exotel-finops/)
 
-#### Tags
+## Where to find this API
 
-- Numbers
-- Metadata
-- Telecom
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
 
-#### Properties
-
-- [Documentation](https://developer.exotel.com/api)
-- [OpenAPI](openapi/exotel-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/exotel.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/exotel.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-
-### Exotel Campaigns API
-
-Create, list, get, update (pause/resume), and delete bulk outbound call campaigns under the v2 API (`POST/GET/PUT/DELETE /v2/accounts/{sid}/campaigns`), and pull per-call records via `campaigns/{id}/call-details`.
-
-- **Human URL:** [https://developer.exotel.com/api](https://developer.exotel.com/api)
-- **Base URL:** `https://api.exotel.com/v2/accounts`
-
-#### Tags
-
-- Campaigns
-- Outbound
-- Bulk
-
-#### Properties
-
-- [Documentation](https://developer.exotel.com/api)
-- [OpenAPI](openapi/exotel-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/exotel.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/exotel.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-
-### Exotel AgentStream Voice Streaming API
-
-Documented WebSocket (`wss://`) voice-streaming API. When a call reaches a Voicebot or Stream applet, Exotel opens a secure WebSocket to your endpoint and streams base64 linear-PCM audio in ~100 ms frames (`connected`/`start`/`media`/`dtmf`/`mark`/`stop`); the Voicebot applet is bidirectional so your server sends `media`/`mark`/`clear` back to speak to the caller and barge in. Exotel is the WebSocket client; you host the endpoint.
-
-- **Human URL:** [https://developer.exotel.com/docs/agentstream/developer-guide](https://developer.exotel.com/docs/agentstream/developer-guide)
-- **Base URL:** `wss://your-bot-host.example.com`
-
-#### Tags
-
-- WebSocket
-- Voice Streaming
-- Voicebot
-- Real Time
-
-#### Properties
-
-- [Documentation](https://developer.exotel.com/docs/agentstream/developer-guide)
-- [AsyncAPI](asyncapi/exotel-asyncapi.yml) — [AsyncAPI Specification](https://www.asyncapi.com/docs/reference/specification/v2.6.0)
-
-## Common Properties
-
-- [Domain Security](security/exotel-domain-security.yml)
-- [Authentication](authentication/exotel-authentication.yml)
-- [LinkedIn](https://www.linkedin.com/company/exotel)
 - [Website](https://exotel.com)
 - [Documentation](https://developer.exotel.com)
-- [Plans](plans/exotel-plans-pricing.yml)
-- [Rate Limits](rate-limits/exotel-rate-limits.yml)
-- [Fin Ops](finops/exotel-finops.yml)
 - [Blog](https://exotel.com/blog/)
 
-## Maintainers
+## API Evangelist rating
 
-**FN:** Kin Lane
-**Email:** kin@apievangelist.com
+**Kin Score 28.8** — thin · rubric 0.24.0 · scored 2026-10-17
+
+| Facet | Score |
+|---|---|
+| Discoverability | 66.1 |
+| Contract quality | 56.4 |
+| Contract governance | 11.4 |
+| Operational transparency | 7.9 |
+| Developer ergonomics | 32.1 |
+| Access clarity | 7.9 |
+
+**Agent readiness 19.0** — agent-aware
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | — |
+| OpenAPI Examples | — |
+| Rate Limit Signal | derived (partial credit) |
+| Event Surface Described | derived (partial credit) |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+
+**Regulatory alignment 10.0** — Telecommunications
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/exotel/](https://apis.io/providers/exotel/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Exotel: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/exotel/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
